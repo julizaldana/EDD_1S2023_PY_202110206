@@ -52,3 +52,11 @@ func (ce *ColaEstudiantes) Desencolar() {
 func (ce *ColaEstudiantes) MostrarPrimero() {
 	fmt.Println(ce.Primero.estudiante)
 }
+
+func (ce *ColaEstudiantes) MostrarLongitud() {
+	fmt.Println(ce.Longitud)
+}
+
+func (ce *ColaEstudiantes) MostrarSiguiente() {
+	fmt.Println(ce.Primero.siguiente.estudiante)
+}

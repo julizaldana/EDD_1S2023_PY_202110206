@@ -1,18 +1,17 @@
 package main
 
-
 import (
-	"EDD_Proyecto1_Fase1/estructuras"
+	"EDD_Proyecto1_Fase1/EDD_Proyecto1_Fase1/estructuras"
 	"fmt"
 )
 
-
-
 func main() {
 	fmt.Println("Prueba impresion")
+	cola_estudiantes := &estructuras.ColaEstudiantes{nil, 0}
+	lista_estudiantes := &estructuras.ListaDoble{Inic}
 
 	var (
-		user string
+		user  string
 		passw string
 	)
 	opcion := 0
@@ -35,7 +34,7 @@ func main() {
 			fmt.Scanln(&passw)
 
 			if user == "admin" || passw == "admin" {
-				menu_dashboard_admin()				
+				menu_dashboard(cola_estudiantes)
 			}
 
 		case 2:
@@ -44,13 +43,14 @@ func main() {
 		}
 	}
 
+}
 
-func menu_dashboard_admin() {
+func menu_dashboard(cola_estudiantes *estructuras.ColaEstudiantes) {
 	opcion := 0
 	salir := false
 
 	var (
-		name string
+		name     string
 		lastname string
 		carnetid int
 		password string
@@ -66,10 +66,12 @@ func menu_dashboard_admin() {
 		fmt.Println("5. Cerrar Sesión")
 		switch opcion {
 		case 1:
-			fmt.Println("")
-		
+			fmt.Println("-----Estudiantes Pendientes---EDD GoDrive-----")
+				menu_pendientes(cola_estudiantes)
+
 		case 2:
-			
+			fmt.Println("-----Estudiantes Registrados En El Sistema---EDD GoDrive-----")
+
 		case 3:
 			fmt.Println("-----Registro de Estudiantes---EDD GoDrive-----")
 			fmt.Println("Ingresar un Nombre: ")
@@ -80,15 +82,47 @@ func menu_dashboard_admin() {
 			fmt.Scanln(&carnetid)
 			fmt.Println("Ingresar un Password/Contraseña: ")
 			fmt.Scanln(&password)
-			
+			cola_estudiantes.Encolar(name + " " + lastname, carnetid, password)
 		case 4:
 
 		case 5:
 			fmt.Println("Cerrando Dashboard Administrador...")
+			salir = true
 
 		}
 	}
 }
+
+
+func menu_pendientes(cola_estudiantes *estructuras.ColaEstudiantes) {
+	option := 0
+	salir := false
+
+
+for !salir {
+	fmt.Println("Pendientes: ")
+	cola_estudiantes.MostrarLongitud()
+	fmt.Println("Estudiante Actual: ")
+	cola_estudiantes.MostrarPrimero()
+	fmt.Println("1. Aceptar al Estudiante")
+	fmt.Println("2. Rechazar al Estudiante")
+	fmt.Println("3. Volver al Menu")
+	fmt.Println("Elige una opcion: ")
+	fmt.Scanln(&option)
+	switch option {
+	
+	case 1:
+		cola_estudiantes.Desencolar()
+		lista_estudiantes.
+	case 2:
+		cola_estudiantes.MostrarSiguiente()
+	case 3:
+		salir = true
+
+
+	}
+}	
+
 
 
 }

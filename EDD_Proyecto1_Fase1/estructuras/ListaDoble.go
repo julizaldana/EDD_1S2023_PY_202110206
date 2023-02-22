@@ -4,6 +4,7 @@ import "fmt"
 
 type ListaDoble struct {
 	inicio   *Nodo
+	final    *Nodo
 	longitud int
 }
 
@@ -23,15 +24,21 @@ func (l *ListaDoble) newNodo(estudiante *Estudiante) *Nodo {
 func (l *ListaDoble) InsertarAlFinal(nombre string, carnet int, contraseña string) {
 	nuevoEstudiante := &Estudiante{nombre, carnet, contraseña} //atributos
 	if l.estaVacia() {
-		l.inicio = l.newNodo(nuevoEstudiante) //se agrega  un nuevo nodo, un nuevo estudiante al inicio, si está vacia la lista
+		nuevoNodo := l.newNodo(nuevoEstudiante) //se agrega  un nuevo nodo, un nuevo estudiante al inicio, si está vacia la lista
+		l.inicio = nuevoNodo
+		l.final = nuevoNodo
 		l.longitud++
 	} else {
-		aux := l.inicio
-		for aux.siguiente != nil {
-			aux = aux.siguiente
+		nuevoNodo := l.newNodo((nuevoEstudiante))
+		if l.final.anterior == nil {
+			nuevoNodo.anterior = l.inicio
+			l.inicio.siguiente = nuevoNodo
+			l.final = nuevoNodo
+		} else {
+			l.final.siguiente = nuevoNodo
+			nuevoNodo.anterior = l.final
+			l.final = nuevoNodo
 		}
-		aux.siguiente = l.newNodo(nuevoEstudiante)
-		aux.siguiente.anterior = aux
 		l.longitud++
 	}
 
@@ -40,8 +47,7 @@ func (l *ListaDoble) InsertarAlFinal(nombre string, carnet int, contraseña stri
 func (l *ListaDoble) ImprimirListaDoble() {
 	aux := l.inicio
 	for aux != nil {
-		fmt.Print(aux.estudiante.carnet)
-		fmt.Println("--->", aux.estudiante.nombre)
+		fmt.Printf("Nombre: %s, Carnet %d", aux.estudiante.nombre, aux.estudiante.carnet)
 		aux = aux.siguiente
 	}
 }
