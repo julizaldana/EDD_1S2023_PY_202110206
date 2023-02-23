@@ -44,8 +44,20 @@ func (ce *ColaEstudiantes) Desencolar() {
 	if ce.estaVacia() {
 		fmt.Println("No hay estudiantes en la cola de espera")
 	} else {
+		fmt.Println(ce.Primero.estudiante)
 		ce.Primero = ce.Primero.siguiente
 		ce.Longitud--
+	}
+}
+
+func (ce *ColaEstudiantes) EstudianteRechazado() {
+	Cola := ColaEstudiantes{}
+	if ce.estaVacia() {
+		fmt.Println("No hay estudiantes en la cola de espera")
+	} else {
+		aux := ce.Primero
+		Cola.Encolar(aux.estudiante.nombre, aux.estudiante.carnet, aux.estudiante.contraseña)
+		Cola.Desencolar()
 	}
 }
 
