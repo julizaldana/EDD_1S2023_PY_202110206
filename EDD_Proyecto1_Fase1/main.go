@@ -6,7 +6,6 @@ import (
 )
 
 func main() {
-	fmt.Println("Prueba impresion")
 	cola_estudiantes := &estructuras.ColaEstudiantes{nil, 0}
 
 	var (
@@ -47,6 +46,7 @@ func main() {
 }
 
 func menu_dashboard(cola_estudiantes *estructuras.ColaEstudiantes) {
+	lista_estudiantes := &estructuras.ListaDoble{Inicio: nil, Final: nil, Longitud: 0}
 	opcion := 0
 	salir := false
 
@@ -74,16 +74,17 @@ func menu_dashboard(cola_estudiantes *estructuras.ColaEstudiantes) {
 
 		case 2:
 			fmt.Println("-----Estudiantes Registrados En El Sistema---EDD GoDrive-----")
+			lista_estudiantes.ImprimirListaDoble()
 
 		case 3:
 			fmt.Println("-----Registro de Estudiantes---EDD GoDrive-----")
-			fmt.Println("Ingresar un Nombre: ")
+			fmt.Print("Ingresar un Nombre: ")
 			fmt.Scanln(&name)
-			fmt.Println("Ingresar un Apellido: ")
+			fmt.Print("Ingresar un Apellido: ")
 			fmt.Scanln(&lastname)
-			fmt.Println("Ingresar Carnet: ")
+			fmt.Print("Ingresar Carnet: ")
 			fmt.Scanln(&carnetid)
-			fmt.Println("Ingresar un Password/Contraseña: ")
+			fmt.Print("Ingresar un Password/Contraseña: ")
 			fmt.Scanln(&password)
 			cola_estudiantes.Encolar(name+" "+lastname, carnetid, password)
 		case 4:
@@ -97,7 +98,6 @@ func menu_dashboard(cola_estudiantes *estructuras.ColaEstudiantes) {
 }
 
 func menu_pendientes(cola_estudiantes *estructuras.ColaEstudiantes) {
-	//lista_estudiantes = &estructuras.ListaDoble{Inicio: nil, Final: nil, Longitud: 0}
 	option := 0
 	salir := false
 
@@ -108,7 +108,8 @@ func menu_pendientes(cola_estudiantes *estructuras.ColaEstudiantes) {
 		cola_estudiantes.MostrarPrimero()
 		fmt.Println("1. Aceptar al Estudiante")
 		fmt.Println("2. Rechazar al Estudiante")
-		fmt.Println("3. Volver al Menu")
+		fmt.Println("3. Reporte de Cola")
+		fmt.Println("4. Volver al Menu")
 		fmt.Print("Elige una opcion: ")
 		fmt.Scanln(&option)
 		switch option {
@@ -120,6 +121,9 @@ func menu_pendientes(cola_estudiantes *estructuras.ColaEstudiantes) {
 			cola_estudiantes.EstudianteRechazado()
 
 		case 3:
+			cola_estudiantes.Graficar()
+
+		case 4:
 			salir = true
 
 		}
