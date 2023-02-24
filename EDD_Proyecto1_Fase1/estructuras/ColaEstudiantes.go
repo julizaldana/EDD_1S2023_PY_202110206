@@ -5,6 +5,8 @@ import (
 	"strconv"
 )
 
+var lista_estudiantes = &ListaDoble{}
+
 type ColaEstudiantes struct {
 	Primero  *nodo
 	Longitud int
@@ -42,12 +44,12 @@ func (ce *ColaEstudiantes) Encolar(nombre string, carnet int, contraseña string
 }
 
 func (ce *ColaEstudiantes) Desencolar() {
-	lista_estudiantes := &ListaDoble{Inicio: nil, Final: nil, Longitud: 0}
 	if ce.estaVacia() {
 		fmt.Println("No hay estudiantes en la cola de espera")
 	} else {
 		fmt.Println(ce.Primero.estudiante)
 		lista_estudiantes.AgregarEstudiante(ce.Primero.estudiante.nombre, ce.Primero.estudiante.carnet, ce.Primero.estudiante.contraseña)
+		fmt.Println("Se agrega correctamente " + ce.Primero.estudiante.nombre + strconv.Itoa(ce.Primero.estudiante.carnet) + ce.Primero.estudiante.contraseña)
 		ce.Primero = ce.Primero.siguiente
 		ce.Longitud--
 
