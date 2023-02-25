@@ -3,11 +3,14 @@ package main
 import (
 	"EDD_Proyecto1_Fase1/EDD_Proyecto1_Fase1/estructuras"
 	"fmt"
+	"strconv"
+	"time"
 )
 
 // ESTRUCTURAS GLOBALES
 var cola_estudiantes = &estructuras.ColaEstudiantes{}
 var lista_estudiantes = &estructuras.ListaDoble{}
+var bitacora_pila_admin = &estructuras.Pila{}
 
 func main() {
 	cola_estudiantes = &estructuras.ColaEstudiantes{nil, 0}
@@ -121,13 +124,14 @@ func menu_pendientes(cola_estudiantes *estructuras.ColaEstudiantes) {
 		fmt.Println("1. Aceptar al Estudiante")
 		fmt.Println("2. Rechazar al Estudiante")
 		fmt.Println("3. Reporte de Cola")
-		fmt.Println("4. Volver al Menu")
+		fmt.Println("4. Reporte Bitácora")
+		fmt.Println("5. Volver al Menu")
 		fmt.Print("Elige una opcion: ")
 		fmt.Scanln(&option)
 		switch option {
-
 		case 1:
 			cola_estudiantes.Desencolar()
+			bitacora_pila_admin.Push("Se aceptó a estudiante")
 
 		case 2:
 			cola_estudiantes.EstudianteRechazado()
@@ -136,9 +140,60 @@ func menu_pendientes(cola_estudiantes *estructuras.ColaEstudiantes) {
 			cola_estudiantes.Graficar()
 
 		case 4:
+			if option == 1 {
+				bitacora_pila_admin.Push("Se aceptó a estudiante")
+			}
+
+		case 5:
 			salir = true
 
 		}
 	}
 
+}
+
+//FORMATO PARA IMPRESION DE HORAS
+
+func formato_hora() string {
+	tiempo := time.Now()
+	texto_final := ""
+	if tiempo.Hour() < 10 {
+		texto_final = texto_final + "0" + strconv.Itoa(tiempo.Hour()) + ":"
+	} else {
+		texto_final = texto_final + strconv.Itoa(tiempo.Hour()) + ":"
+	}
+	if tiempo.Minute() < 10 {
+		texto_final = texto_final + "0" + strconv.Itoa(tiempo.Minute()) + ":"
+	} else {
+		texto_final = texto_final + strconv.Itoa(tiempo.Minute()) + ":"
+	}
+	if tiempo.Second() < 10 {
+		texto_final = texto_final + "0" + strconv.Itoa(tiempo.Second())
+	} else {
+		texto_final = texto_final + strconv.Itoa(tiempo.Second())
+	}
+	return texto_final
+}
+
+//FORMATO PARA IMPRESION DE FECHAS
+
+func formato_fecha() string {
+	tiempo := time.Now()
+	texto_final := ""
+	if tiempo.Day() < 10 {
+		texto_final = texto_final + "0" + strconv.Itoa(tiempo.Day()) + "/"
+	} else {
+		texto_final = texto_final + strconv.Itoa(tiempo.Day()) + "/"
+	}
+	if tiempo.Month() < 10 {
+		texto_final = texto_final + "0" + strconv.Itoa(int(tiempo.Month())) + "/"
+	} else {
+		texto_final = texto_final + strconv.Itoa(int(tiempo.Month())) + "/"
+	}
+	if tiempo.Year() < 10 {
+		texto_final = texto_final + "0" + strconv.Itoa(tiempo.Year())
+	} else {
+		texto_final = texto_final + strconv.Itoa(tiempo.Year())
+	}
+	return texto_final
 }
