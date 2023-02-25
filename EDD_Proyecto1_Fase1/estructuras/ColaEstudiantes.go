@@ -86,26 +86,30 @@ func (ce *ColaEstudiantes) MostrarSiguiente() {
 }
 
 func (ce *ColaEstudiantes) Graficar() {
-	nombre_archivo := "./colaespera.dot"
-	nombre_imagen := "colaespera.jpg"
-	texto := "digraph cola{\n"
-	texto += "rankdir=LR;\n"
-	texto += "node[shape = record];\n"
-	texto += "nodonull2[label=\"null\"];\n"
-	aux := ce.Primero
-	contador := 0
-	for i := 0; i < ce.Longitud; i++ {
-		texto = texto + "nodo" + strconv.Itoa(i) + "[label=\"{" + strconv.Itoa(aux.estudiante.carnet) + "\\n" + aux.estudiante.nombre + "|}\"];\n"
-		aux = aux.siguiente
+	if ce.estaVacia() {
+		fmt.Println("No hay estudiantes en la cola de espera")
+	} else {
+		nombre_archivo := "./colaespera.dot"
+		nombre_imagen := "colaespera.jpg"
+		texto := "digraph cola{\n"
+		texto += "rankdir=LR;\n"
+		texto += "node[shape = record];\n"
+		texto += "nodonull2[label=\"null\"];\n"
+		aux := ce.Primero
+		contador := 0
+		for i := 0; i < ce.Longitud; i++ {
+			texto = texto + "nodo" + strconv.Itoa(i) + "[label=\"{" + strconv.Itoa(aux.estudiante.carnet) + "\\n" + aux.estudiante.nombre + "|}\"];\n"
+			aux = aux.siguiente
+		}
+		for i := 0; i < ce.Longitud-1; i++ {
+			c := i + 1
+			texto += "nodo" + strconv.Itoa(i) + "->nodo" + strconv.Itoa(c) + ";\n"
+			contador = c
+		}
+		texto += "nodo" + strconv.Itoa(contador) + "->nodonull2;\n"
+		texto += "}"
+		crearArchivo(nombre_archivo)
+		escribirArchivoDot(texto, nombre_archivo)
+		ejecutar(nombre_imagen, nombre_archivo)
 	}
-	for i := 0; i < ce.Longitud-1; i++ {
-		c := i + 1
-		texto += "nodo" + strconv.Itoa(i) + "->nodo" + strconv.Itoa(c) + ";\n"
-		contador = c
-	}
-	texto += "nodo" + strconv.Itoa(contador) + "->nodonull2;\n"
-	texto += "}"
-	crearArchivo(nombre_archivo)
-	escribirArchivoDot(texto, nombre_archivo)
-	ejecutar(nombre_imagen, nombre_archivo)
 }

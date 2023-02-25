@@ -15,6 +15,7 @@ var bitacora_pila_admin = &estructuras.Pila{}
 func main() {
 	cola_estudiantes = &estructuras.ColaEstudiantes{nil, 0}
 	lista_estudiantes = &estructuras.ListaDoble{Inicio: nil, Final: nil, Longitud: 0}
+	bitacora_pila_admin = &estructuras.Pila{nil, 0}
 	var (
 		user  string
 		passw string
@@ -124,25 +125,24 @@ func menu_pendientes(cola_estudiantes *estructuras.ColaEstudiantes) {
 		fmt.Println("1. Aceptar al Estudiante")
 		fmt.Println("2. Rechazar al Estudiante")
 		fmt.Println("3. Reporte de Cola")
-		fmt.Println("4. Reporte Bitácora")
+		fmt.Println("4. Reporte Bitácora para Administrador")
 		fmt.Println("5. Volver al Menu")
 		fmt.Print("Elige una opcion: ")
 		fmt.Scanln(&option)
 		switch option {
 		case 1:
 			cola_estudiantes.Desencolar()
-			bitacora_pila_admin.Push("Se aceptó a estudiante")
+			SubirAceptadoPila(bitacora_pila_admin)
 
 		case 2:
 			cola_estudiantes.EstudianteRechazado()
+			SubirRechazadoPila(bitacora_pila_admin)
 
 		case 3:
 			cola_estudiantes.Graficar()
 
 		case 4:
-			if option == 1 {
-				bitacora_pila_admin.Push("Se aceptó a estudiante")
-			}
+			bitacora_pila_admin.Graficar()
 
 		case 5:
 			salir = true
@@ -150,6 +150,14 @@ func menu_pendientes(cola_estudiantes *estructuras.ColaEstudiantes) {
 		}
 	}
 
+}
+
+func SubirAceptadoPila(bitacora_pila_admin *estructuras.Pila) {
+	bitacora_pila_admin.Push("Se aceptó a estudiante" + "\\n" + formato_fecha() + " " + formato_hora())
+}
+
+func SubirRechazadoPila(bitacora_pila_admin *estructuras.Pila) {
+	bitacora_pila_admin.Push("Se rechazó a estudiante" + "\\n" + formato_fecha() + " " + formato_hora())
 }
 
 //FORMATO PARA IMPRESION DE HORAS

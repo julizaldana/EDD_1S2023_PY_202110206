@@ -1,6 +1,6 @@
 package estructuras
 
-type NodoPila struct {
+type Nodop struct {
 	Data      string
-	Siguiente *NodoPila
+	Siguiente *Nodop
 }
