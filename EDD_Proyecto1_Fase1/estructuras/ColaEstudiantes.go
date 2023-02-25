@@ -73,7 +73,7 @@ func (ce *ColaEstudiantes) MostrarPrimero() {
 		fmt.Println("No hay estudiantes en la cola de espera")
 
 	} else {
-		fmt.Println(ce.Primero.estudiante)
+		fmt.Println(ce.Primero.estudiante.nombre)
 	}
 }
 
