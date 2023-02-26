@@ -24,8 +24,7 @@ func (l *ListaDoble) newNodo(estudiante *Estudiante) *Nodo {
 
 }
 
-func (l *ListaDoble) AgregarEstudiante(nombre string, carnet int, contraseña string) {
-	nuevoEstudiante := &Estudiante{nombre, carnet, contraseña} //atributos
+func (l *ListaDoble) AgregarEstudiante(nuevoEstudiante *Estudiante) {
 	if l.estaVacia() {
 		nuevoNodo := l.newNodo(nuevoEstudiante) //se agrega  un nuevo nodo, un nuevo estudiante al inicio, si está vacia la lista
 		l.Inicio = nuevoNodo

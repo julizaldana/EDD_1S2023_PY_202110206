@@ -131,6 +131,7 @@ func menu_pendientes(cola_estudiantes *estructuras.ColaEstudiantes) {
 		fmt.Scanln(&option)
 		switch option {
 		case 1:
+			lista_estudiantes.AgregarEstudiante(cola_estudiantes.Primero.Estudiante)
 			cola_estudiantes.Desencolar()
 			SubirAceptadoPila(bitacora_pila_admin)
 
@@ -149,6 +150,11 @@ func menu_pendientes(cola_estudiantes *estructuras.ColaEstudiantes) {
 
 		}
 	}
+
+}
+
+func Rechazarestudiante(nestudent *estructuras.Estudiante) {
+	cola_estudiantes.Desencolar()
 
 }
 

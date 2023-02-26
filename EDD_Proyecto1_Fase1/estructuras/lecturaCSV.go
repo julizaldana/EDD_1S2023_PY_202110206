@@ -36,6 +36,5 @@ func LeerArchivo(ruta string) {
 		}
 		carne, err := strconv.Atoi(linea[0])
 		fmt.Println("Nombre: ", linea[1], " Carnet: ", carne, "Password: ", linea[2])
-		cola_estudiantes.Encolar(linea[1], carne, linea[2])
 	}
 }

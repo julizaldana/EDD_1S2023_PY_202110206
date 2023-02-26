@@ -47,9 +47,7 @@ func (ce *ColaEstudiantes) Desencolar() {
 	if ce.estaVacia() {
 		fmt.Println("No hay estudiantes en la cola de espera")
 	} else {
-		fmt.Println(ce.Primero.estudiante)
-		lista_estudiantes.AgregarEstudiante(ce.Primero.estudiante.nombre, ce.Primero.estudiante.carnet, ce.Primero.estudiante.contraseña)
-		fmt.Println("Se agrega correctamente " + ce.Primero.estudiante.nombre + strconv.Itoa(ce.Primero.estudiante.carnet) + ce.Primero.estudiante.contraseña)
+		fmt.Println(ce.Primero.Estudiante)
 		ce.Primero = ce.Primero.siguiente
 		ce.Longitud--
 
@@ -60,11 +58,7 @@ func (ce *ColaEstudiantes) EstudianteRechazado() {
 	if ce.estaVacia() {
 		fmt.Println("No hay estudiantes en la cola de espera")
 	} else {
-		aux := ce.Primero
-		for aux.siguiente != nil {
-			aux = aux.siguiente
-		}
-		aux.siguiente = ce.Primero
+
 	}
 }
 
@@ -73,7 +67,7 @@ func (ce *ColaEstudiantes) MostrarPrimero() {
 		fmt.Println("No hay estudiantes en la cola de espera")
 
 	} else {
-		fmt.Println(ce.Primero.estudiante.nombre)
+		fmt.Println(ce.Primero.Estudiante.nombre)
 	}
 }
 
@@ -82,7 +76,7 @@ func (ce *ColaEstudiantes) MostrarLongitud() {
 }
 
 func (ce *ColaEstudiantes) MostrarSiguiente() {
-	fmt.Println(ce.Primero.siguiente.estudiante)
+	fmt.Println(ce.Primero.siguiente.Estudiante)
 }
 
 func (ce *ColaEstudiantes) Graficar() {
@@ -98,7 +92,7 @@ func (ce *ColaEstudiantes) Graficar() {
 		aux := ce.Primero
 		contador := 0
 		for i := 0; i < ce.Longitud; i++ {
-			texto = texto + "nodo" + strconv.Itoa(i) + "[label=\"{" + strconv.Itoa(aux.estudiante.carnet) + "\\n" + aux.estudiante.nombre + "|}\"];\n"
+			texto = texto + "nodo" + strconv.Itoa(i) + "[label=\"{" + strconv.Itoa(aux.Estudiante.carnet) + "\\n" + aux.Estudiante.nombre + "|}\"];\n"
 			aux = aux.siguiente
 		}
 		for i := 0; i < ce.Longitud-1; i++ {
