@@ -8,9 +8,7 @@ import (
 	"strconv"
 )
 
-var cola_estudiantes = &ColaEstudiantes{}
-
-func LeerArchivo(ruta string) {
+func LeerArchivo(ruta string, cola *ColaEstudiantes) {
 	file, err := os.Open(ruta)
 	if err != nil {
 		fmt.Println("Error al abrir el archivo")
@@ -34,7 +32,10 @@ func LeerArchivo(ruta string) {
 			encabezado = false
 			continue
 		}
+		nombre := linea[1]
+		password := linea[2]
 		carne, err := strconv.Atoi(linea[0])
+		cola.Encolar(nombre, carne, password)
 		fmt.Println("Nombre: ", linea[1], " Carnet: ", carne, "Password: ", linea[2])
 	}
 }

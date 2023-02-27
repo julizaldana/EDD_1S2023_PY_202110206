@@ -99,7 +99,7 @@ func menu_dashboard(cola_estudiantes *estructuras.ColaEstudiantes) {
 			var ruta string
 			fmt.Println("Se lee archivo CSV")
 			fmt.Scanln(&ruta)
-			estructuras.LeerArchivo(ruta)
+			estructuras.LeerArchivo(ruta, cola_estudiantes)
 			fmt.Println("")
 
 		case 5:

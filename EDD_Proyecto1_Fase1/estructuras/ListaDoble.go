@@ -46,10 +46,30 @@ func (l *ListaDoble) AgregarEstudiante(nuevoEstudiante *Estudiante) {
 
 }
 
+func (l *ListaDoble) GetEstudiante(carnet int) {
+	tmp := l.Inicio
+	if tmp.Estudiante.carnet == carnet {
+		fmt.Println("Estudiante encontrado " + tmp.Estudiante.nombre)
+		tmp = tmp.siguiente
+	} else {
+		fmt.Println("El usuario/contraseña no coinciden con algun estudiante en el sistema")
+	}
+}
+
+func (l *ListaDoble) GetEstudiantePassw(contra string) {
+	tmp := l.Inicio
+	if tmp.Estudiante.contraseña == contra {
+		fmt.Println("Estudiante encontrado " + tmp.Estudiante.nombre)
+		tmp = tmp.siguiente
+	} else {
+		fmt.Println("El usuario/contraseña no coinciden con algun estudiante en el sistema")
+	}
+}
+
 func (l *ListaDoble) ImprimirListaDoble() {
 	aux := l.Inicio
 	for aux != nil {
-		fmt.Printf("Nombre: %s, Carnet %d ", aux.estudiante.nombre, aux.estudiante.carnet)
+		fmt.Printf("Nombre: %s, Carnet %d ", aux.Estudiante.nombre, aux.Estudiante.carnet)
 		aux = aux.siguiente
 	}
 }
@@ -71,8 +91,8 @@ func (l *ListaDoble) Graficar() {
 	aux := l.Inicio
 	contador := 0
 	for i := 0; i < l.Longitud; i++ {
-		texto = texto + "nodo" + strconv.Itoa(i) + "[label=\"{" + strconv.Itoa(aux.estudiante.carnet) + "\\n" + aux.estudiante.nombre + "|}\"];\n"
-		texto = texto + "nodo" + strconv.Itoa(i) + "->nodo" + strconv.Itoa(aux.siguiente.estudiante.carnet) + aux.siguiente.estudiante.nombre
+		texto = texto + "nodo" + strconv.Itoa(i) + "[label=\"{" + strconv.Itoa(aux.Estudiante.carnet) + "\\n" + aux.Estudiante.nombre + "|}\"];\n"
+		texto = texto + "nodo" + strconv.Itoa(i) + "->nodo" + strconv.Itoa(aux.siguiente.Estudiante.carnet) + aux.siguiente.Estudiante.nombre
 		aux = aux.siguiente
 	}
 	for i := 0; i < l.Longitud-1; i++ {
