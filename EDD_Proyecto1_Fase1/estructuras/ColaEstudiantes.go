@@ -54,11 +54,23 @@ func (ce *ColaEstudiantes) Desencolar() {
 	}
 }
 
-func (ce *ColaEstudiantes) EstudianteRechazado() {
+func (ce *ColaEstudiantes) EstudianteRechazado(EstudianteR *Estudiante) {
 	if ce.estaVacia() {
 		fmt.Println("No hay estudiantes en la cola de espera")
 	} else {
-
+		if ce.estaVacia() {
+			nuevoNodo := ce.newNodoCola(EstudianteR)
+			ce.Primero = nuevoNodo
+			ce.Longitud++
+		} else {
+			nuevoNodo := ce.newNodoCola(EstudianteR)
+			aux := ce.Primero
+			for aux.siguiente != nil {
+				aux = aux.siguiente
+			}
+			aux.siguiente = nuevoNodo
+			ce.Longitud++
+		}
 	}
 }
 

@@ -136,7 +136,8 @@ func menu_pendientes(cola_estudiantes *estructuras.ColaEstudiantes) {
 			SubirAceptadoPila(bitacora_pila_admin)
 
 		case 2:
-			cola_estudiantes.EstudianteRechazado()
+			cola_estudiantes.EstudianteRechazado(cola_estudiantes.Primero.Estudiante)
+			cola_estudiantes.Desencolar()
 			SubirRechazadoPila(bitacora_pila_admin)
 
 		case 3:
