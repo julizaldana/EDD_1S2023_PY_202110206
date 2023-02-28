@@ -80,7 +80,8 @@ func menu_dashboard(cola_estudiantes *estructuras.ColaEstudiantes) {
 		fmt.Println("3. Registrar Nuevo Estudiante")
 		fmt.Println("4. Carga Masiva de Estudiantes")
 		fmt.Println("5. Crear Archivo de Estudiantes del Sistema")
-		fmt.Println("6. Cerrar Sesión")
+		fmt.Println("6. Ver Estado de Estudiantes en el Sistema")
+		fmt.Println("7. Cerrar Sesión")
 		fmt.Print("Elige una opcion: ")
 		fmt.Scanln(&opcion)
 		switch opcion {
@@ -117,6 +118,9 @@ func menu_dashboard(cola_estudiantes *estructuras.ColaEstudiantes) {
 			estructuras.EscribirArchivo(contenido)
 
 		case 6:
+			lista_estudiantes.Graficar()
+
+		case 7:
 			fmt.Println("Cerrando Dashboard Administrador...")
 			salir = true
 

@@ -20,7 +20,7 @@ func (l *ListaDoble) estaVacia() bool {
 }
 
 func (l *ListaDoble) newNodo(estudiante *Estudiante) *Nodo {
-	return &Nodo{estudiante, nil, nil}
+	return &Nodo{estudiante, nil, nil, nil}
 
 }
 
@@ -91,26 +91,72 @@ func NewLista() *ListaDoble {
 	return lista
 }
 
+type Pilalog struct {
+	Primero  *Nodopilalogin
+	Longitud int
+}
+
+func (p *Pilalog) estaVacia() bool {
+	if p.Longitud == 0 {
+		return true
+	} else {
+		return false
+	}
+}
+
+func (p *Pilalog) Push(Data string) {
+	if p.estaVacia() {
+		nuevoNodo := &Nodopilalogin{Data, nil}
+		p.Primero = nuevoNodo
+		p.Longitud++
+	} else {
+		nuevoNodo := &Nodopilalogin{Data, p.Primero}
+		p.Primero = nuevoNodo
+		p.Longitud++
+	}
+}
+
+func (p *Pilalog) Pop() {
+	if p.estaVacia() {
+		fmt.Println("La pila no tiene elementos")
+	} else {
+		p.Primero = p.Primero.siguiente
+		p.Longitud--
+	}
+}
+
+func (p *Pilalog) Peek() {
+	if p.estaVacia() {
+		fmt.Println("La pila no tiene elementos")
+	} else {
+		fmt.Println(p.Primero.Data)
+	}
+}
+
 func (l *ListaDoble) Graficar() {
-	nombre_archivo := "./colaespera.dot"
-	nombre_imagen := "colaespera.jpg"
-	texto := "digraph cola{\n"
-	texto += "rankdir=LR;\n"
-	texto += "node[shape = record];\n"
-	texto += "nodonull2[label=\"null\"];\n"
+	nombre_archivo := "./listaestudiantes.dot"
+	nombre_imagen := "listaestudiantes.jpg"
+	texto := "digraph lisstaestudiantes{\n"
+	texto += "node[shape = box];\n"
+	texto += "edge[dir = \"both\" minlen = 3] \n"
+	texto += "{rank=same;"
+	texto += "nodonil1[width=1 label = \"nil\" ] \n" //Se definen los nodos nil, de la lista doblemente enlazada
+	texto += "nodonil2[width=1 label = \"nil\" ] \n"
 	aux := l.Inicio
-	contador := 0
 	for i := 0; i < l.Longitud; i++ {
-		texto = texto + "nodo" + strconv.Itoa(i) + "[label=\"{" + strconv.Itoa(aux.Estudiante.carnet) + "\\n" + aux.Estudiante.nombre + "|}\"];\n"
-		texto = texto + "nodo" + strconv.Itoa(i) + "->nodo" + strconv.Itoa(aux.siguiente.Estudiante.carnet) + aux.siguiente.Estudiante.nombre
+		texto += "nodo" + strconv.Itoa(i) + "[width=1.4 label=\"" + strconv.Itoa(aux.Estudiante.carnet) + "\\n" + aux.Estudiante.nombre + "\"];\n" //Se irá iterando desde un nodo 0, hasta el ultimo nodo de la lista
 		aux = aux.siguiente
 	}
 	for i := 0; i < l.Longitud-1; i++ {
-		c := i + 1
-		texto += "nodo" + strconv.Itoa(i) + "->nodo" + strconv.Itoa(c) + ";\n"
-		contador = c
+		if i == 0 {
+			texto += "nodonil1" + "-> nodo" + strconv.Itoa(i) + "\n" //Se apunta el primer nodo nil, al primer elemento de la lista doble enlazada
+		}
+		texto += "nodo" + strconv.Itoa(i) + " -> nodo" + strconv.Itoa(i+1) + "\n"
+		if (i + 1) == l.Longitud-1 {
+			texto += "nodo" + strconv.Itoa(i+1) + "-> nodonil2" + "\n" //Se apunta el segundo nodo nil, al ultimo elemento de la lista doble enlazada
+		}
 	}
-	texto += "nodo" + strconv.Itoa(contador) + "->nodonull2;\n"
+	texto += "}\n"
 	texto += "}"
 	crearArchivo(nombre_archivo)
 	escribirArchivoDot(texto, nombre_archivo)
