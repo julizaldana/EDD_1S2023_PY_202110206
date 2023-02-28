@@ -111,7 +111,10 @@ func menu_dashboard(cola_estudiantes *estructuras.ColaEstudiantes) {
 			fmt.Println("")
 
 		case 5:
-			//crear archivo json
+			//Se crea el  archivo json
+			contenido := estructuras.ArchivoJSON(lista_estudiantes)
+			estructuras.CrearArchivo()
+			estructuras.EscribirArchivo(contenido)
 
 		case 6:
 			fmt.Println("Cerrando Dashboard Administrador...")

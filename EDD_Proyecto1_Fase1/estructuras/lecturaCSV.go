@@ -39,3 +39,28 @@ func LeerArchivo(ruta string, cola *ColaEstudiantes) {
 		fmt.Println("Nombre: ", linea[1], " Carnet: ", carne, "Password: ", linea[2])
 	}
 }
+
+func ArchivoJSON(lista *ListaDoble) string {
+	contenido := "{\n"
+	contenido += "\t\"alumnos\": [\n"
+	aux := lista.Inicio
+	for aux.siguiente != nil {
+		contenido += "\t\t{\n"
+		contenido += "\t\t\t\"nombre\": \"" + aux.Estudiante.nombre + "\", \n"
+		contenido += "\t\t\t\"carnet\": " + strconv.Itoa(aux.Estudiante.carnet) + ", \n"
+		contenido += "\t\t\t\"password\": \"" + aux.Estudiante.contraseña + "\", \n"
+		contenido += "\t\t\t\"Carpeta_Raiz\": \"/\" \n"
+		contenido += "\t\t},\n"
+		aux = aux.siguiente
+	}
+	//Estructura para el ultimo elemento
+	contenido += "\t\t{\n"
+	contenido += "\t\t\t\"nombre\": \"" + aux.Estudiante.nombre + "\", \n"
+	contenido += "\t\t\t\"carnet\": " + strconv.Itoa(aux.Estudiante.carnet) + ", \n"
+	contenido += "\t\t\t\"password\": \"" + aux.Estudiante.contraseña + "\", \n"
+	contenido += "\t\t\t\"Carpeta_Raiz\": \"/\" \n"
+	contenido += "\t\t}\n"
+	contenido += "\t]\n"
+	contenido += "}"
+	return contenido
+}
