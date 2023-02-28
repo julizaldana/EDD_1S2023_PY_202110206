@@ -32,44 +32,54 @@ func (l *ListaDoble) AgregarEstudiante(nuevoEstudiante *Estudiante) {
 		l.Longitud++
 	} else {
 		nuevoNodo := l.newNodo((nuevoEstudiante))
-		if l.Final.anterior == nil {
-			nuevoNodo.anterior = l.Inicio
-			l.Inicio.siguiente = nuevoNodo
-			l.Final = nuevoNodo
+		tmp := l.Inicio                                     //Se comienza a recorrer la lista doble enlazada desde el inicio.
+		if nuevoEstudiante.carnet < tmp.Estudiante.carnet { //Si el carnet que se desea agregar, es menor al carnet que está en el inicio. Se agrega de primero.
+			nodoAuxiliar := l.Inicio
+			l.Inicio = nuevoNodo
+			l.Inicio.siguiente = nodoAuxiliar
+			l.Longitud++
 		} else {
-			l.Final.siguiente = nuevoNodo
-			nuevoNodo.anterior = l.Final
-			l.Final = nuevoNodo
+			for tmp.siguiente != nil {
+				if nuevoEstudiante.carnet > tmp.Estudiante.carnet && nuevoEstudiante.carnet < tmp.siguiente.Estudiante.carnet { //Si el carnet que se desea agregar es mayor al nodo acutal, y menor que el siguiente, entonces, se agrega en una posición/nodo en medio.
+					nodoSiguiente := tmp.siguiente
+					tmp.siguiente = nuevoNodo
+					nuevoNodo.siguiente = nodoSiguiente
+					l.Longitud++
+					return
+				} else if nuevoEstudiante.carnet < tmp.Estudiante.carnet { //Si el carnet que se desea agregar es menor al nodo actual que se analiza, se reemplaza por el nuevo nodo
+					nodoAuxiliar := tmp
+					tmp = nuevoNodo
+					nuevoNodo.siguiente = nodoAuxiliar
+					l.Longitud++
+					return
+				} else { //si no se cumplen con las dos condiciones anteriores, simplemente se evalua el nodo siguiente, y se va iterando
+					tmp = tmp.siguiente
+				}
+			}
+			tmp.siguiente = nuevoNodo //Si el carnet que se ingresa, es mas grande que todos, se inserta hasta el final.
+			l.Longitud++
 		}
-		l.Longitud++
-	}
-
-}
-
-func (l *ListaDoble) GetEstudiante(carnet int) {
-	tmp := l.Inicio
-	if tmp.Estudiante.carnet == carnet {
-		fmt.Println("Estudiante encontrado " + tmp.Estudiante.nombre)
-		tmp = tmp.siguiente
-	} else {
-		fmt.Println("El usuario/contraseña no coinciden con algun estudiante en el sistema")
 	}
 }
 
-func (l *ListaDoble) GetEstudiantePassw(contra string) {
-	tmp := l.Inicio
-	if tmp.Estudiante.contraseña == contra {
-		fmt.Println("Estudiante encontrado " + tmp.Estudiante.nombre)
-		tmp = tmp.siguiente
-	} else {
-		fmt.Println("El usuario/contraseña no coinciden con algun estudiante en el sistema")
+func (l *ListaDoble) GetEstudiante(carnet int, contra string) {
+	aux := l.Inicio
+	for aux != nil {
+		if aux.Estudiante.carnet == carnet && aux.Estudiante.contraseña == contra {
+			fmt.Println("Estudiante encontrado " + aux.Estudiante.nombre)
+			aux = aux.siguiente
+		} else {
+			fmt.Println("El usuario/contraseña no coinciden con algun estudiante en el sistema")
+		}
 	}
+
 }
 
 func (l *ListaDoble) ImprimirListaDoble() {
 	aux := l.Inicio
 	for aux != nil {
-		fmt.Printf("Nombre: %s, Carnet %d ", aux.Estudiante.nombre, aux.Estudiante.carnet)
+		fmt.Println("Nombre:" + aux.Estudiante.nombre + " , " + "Carnet:" + strconv.Itoa(aux.Estudiante.carnet))
+		fmt.Println("---------------------------------------------------------------")
 		aux = aux.siguiente
 	}
 }
