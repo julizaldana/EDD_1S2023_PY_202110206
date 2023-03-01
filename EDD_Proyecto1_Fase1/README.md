@@ -16,9 +16,14 @@ En el presente proyecto, correspondiente a la fase 1. Se da a conocer una soluci
 
 Como se mencionó anteriormente, el sistema de EDD GoDrive, trabaja con funciones basicas de un administrador que podrá ingresar al sistema, ingresando como ***"admin"*** en los espacios de usuario y password en un pequeño inicio de sesión, al desplegar la aplicación.
 
+![inicio](https://user-images.githubusercontent.com/98117383/222055486-f0c880a7-ef3d-4228-a5d7-e4d5da0e99e7.png)
+
 Al ingresar tendrá un menú variado. 
 
 **Dashboard Administrador**
+
+![dashboard](https://user-images.githubusercontent.com/98117383/222055559-4ea16ac2-2026-43ad-bf23-582df081702a.png)
+
 
 1. __Ver Estudiantes Pendientes:__ Consiste en otro menú, donde se visualiza los estudiantes en la cola de espera para ser aceptados/rechazados. 
 2. __Ver Estudiantes del Sistema:__ Se visualizan los estudiantes aceptados y registrados en el sistema, ordenados por su numero de carnet de menor a mayor. 
@@ -32,6 +37,9 @@ Si se ingresa al menú de estudiantes pendientes (1):
 Se muestra la cantidad de estudiantes pendientes por atender.
 
 **Estudiantes Pendientes**
+
+![image](https://user-images.githubusercontent.com/98117383/222055630-6e328dc0-1a7a-4e80-a2d4-2d9ab35ae31f.png)
+
 
 1. __Aceptar al estudiante:__ Se acepta al primer estudiante de cola_estudiantes (cola de espera) y se registra en la lista_estudiantes (lista doblemente enlazada)
 2. __Rechazar al estudiante:__ Se rechaza al primer estudiante de cola_estudiantes (cola de espera), se sale de la cola y vuelve a entrar a la cola de espera.
@@ -71,15 +79,85 @@ El codigo esta Separado de la siguiente manera
 
 **Metodos más importantes**
 
+__1. Función Encolar de Cola de Estudiantes: Que recibe tres parámetros:__
+- El nombre que en el formulario se pedirá nombre y apellido en el cual se unen para formar el nombre del estudiante.
+- El carnet, tipo entero
+- La contraseña, tipo string
+
+Se debe de notar, si está vacía la cola, se inserta el nodo como el primero. Sino está vacía, el primer nodo pasará al siguiente nodo, y el nuevo nodo se convertirá en el primero,
+
+![encolar](https://user-images.githubusercontent.com/98117383/222052586-15c80b44-9b9a-4523-b63e-9d95efb87c46.png)
+
+__2. Función Agregar Estudiante de Lista Doble Enlazada:__ 
+
+Que como característica primordial es que esta función, insertará los nodos, siguiendo un orden de menor a mayor de los números de carnet de los estudiantes.
+
+Si no hay ningun objeto en la lista, se agrega el nuevo como el primero. Ya si existen objetos existentes, solo se comienza a recorrer la lista desde el inicio, y entonces si el objeto estudiante que se desea agregar, tiene un carnet menor al que está en el inicio, se agrega de primero.
+
+Luego hay otra condición que si el carnet del objeto estudiante, es mayor al nodo actual, y es menor al siguiente, entonces se agrega en medio de estos.
+
+Y si no se cumplen estas dos condiciones anteriores se evaluan los nodos siguientes y se va iterando. Y si finalmente el carnet del nuevo nodo es mayor a todos los de la lista, se inserta hasta el final.
+
+![agregarestudiante](https://user-images.githubusercontent.com/98117383/222053410-d8256f87-e199-426e-a502-769787790aaa.png)
+
+__3. Creación de archivo JSON:__
+
+Fundamental para poder crear el archivo alumnos.json para tener la lista de estudiantes registrados en el sistema.
+
+![crearjson](https://user-images.githubusercontent.com/98117383/222054288-1482521f-fdc5-4585-9780-388d6c1a573c.png)
+
+![json2](https://user-images.githubusercontent.com/98117383/222054294-840c8769-2f6e-40c9-bbd7-77f8ccf6ba12.png)
+
+Salida de archivo:
+
+![json1](https://user-images.githubusercontent.com/98117383/222056422-a98a2496-1ecf-40aa-a695-7aa4afd4cb72.png)
+
+
+__4. Estructura para lectura de archivo CSV:__
+
+Importante función para poder leer el archivo csv que se posea, para luego almacenar los atributos que se leen linea por linea, en el archivo separado por comas, en donde se agrega por parametros a la función Encolar de la Cola de Estudiantes.
+
+![lecturacsv](https://user-images.githubusercontent.com/98117383/222054300-f6edae20-0874-413a-bba1-acb076f44a1d.png)
+
+__5. Funciones para graficar estructuras con GRAPHVIZ:__
+
+Estas son las estructuras para poder ir creando las gráficas, en esta imagen para poder crear una lista doblemente enlazada, que a cada nodo estudiante, se le enlazará una pila con la información de inicio de sesión.
+
+![graficarlistadoble](https://user-images.githubusercontent.com/98117383/222054848-9afdd69f-a048-4c3c-894a-1ef02f2c28a4.png)
+
+En esta imagen, se encuentra la estructura para graficar la cola de estudiantes. Siguiente el orden de una cola.
+
+![graficarcolaestudiantes](https://user-images.githubusercontent.com/98117383/222054824-f2177c16-bc7b-4513-934a-0a64103233a3.png)
+
+En esta imagen, se encuentra la estructura para graficar la pila de bitácora del administrador. Siguiendo el principio de orden de una pila.
+
+![graficapila](https://user-images.githubusercontent.com/98117383/222054829-3f494797-c0cb-484b-8695-dd2f2a2a593c.png)
+
+__6. Uso de formatos fecha y hora con librería time:__
+
+![formatos](https://user-images.githubusercontent.com/98117383/222056758-6a7e16a3-65a9-493a-a18f-5025ba484c6d.png)
+
+__7. Manejo de archivo main.go para manejar todo el programa__
+
+![main](https://user-images.githubusercontent.com/98117383/222056929-d54dbcb5-ed4d-40b0-99ce-5c35397a6954.png)
 
 -----
 
 **Ejemplo de Reportes**
 
+_1. Ejemplo de Cola de espera de estudiantes_ 
+
+![Cola](https://user-images.githubusercontent.com/98117383/222055926-451575f7-ef55-4c64-80c0-de09c070f051.png)
 
 
+_2. Ejemplo de Pila de bitácora de administrador_ 
+
+![image](https://user-images.githubusercontent.com/98117383/222055990-5d93499d-4274-429d-8e49-2a53d5c54057.png)
 
 
+_3. Ejemplo de Lista doble enlazada con pilas vinculadas a estudiantes_ 
+
+![listadoble](https://user-images.githubusercontent.com/98117383/222056216-b71d4087-2eb0-4b45-b535-532d17909f52.png)
 
 
 -----
