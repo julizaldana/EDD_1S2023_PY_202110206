@@ -17,14 +17,11 @@ func main() {
 	lista_estudiantes = &estructuras.ListaDoble{Inicio: nil, Final: nil, Longitud: 0}
 	bitacora_pila_admin = &estructuras.Pila{nil, 0}
 	var (
-		user       string
-		passw      string
-		usuario    int
-		contrasena string
+		user  string
+		passw string
 	)
 	opcion := 0
 	salir := false
-	usuarionew, err := strconv.Atoi(user)
 
 	for !salir {
 		fmt.Println("*****************************")
@@ -43,14 +40,8 @@ func main() {
 			fmt.Scanln(&passw)
 			if user == "admin" && passw == "admin" {
 				menu_dashboard(cola_estudiantes)
-			} else if usuarionew == usuario && passw == contrasena {
-				if err != nil {
-					fmt.Println("Error")
-					return
-				}
-				lista_estudiantes.GetEstudiante(usuario, contrasena)
 			} else {
-				fmt.Println("El usuario no existe en el sistema EDD GoDrive")
+				lista_estudiantes.AgregarPila(user, passw, "Se inicio sesión: "+formato_fecha()+"  "+formato_hora())
 			}
 
 		case 2:

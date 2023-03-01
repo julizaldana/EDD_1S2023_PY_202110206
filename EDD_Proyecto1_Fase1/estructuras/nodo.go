@@ -6,7 +6,7 @@ type Nodo struct {
 	Estudiante *Estudiante //objeto estudiante
 	siguiente  *Nodo
 	anterior   *Nodo
-	pilalogin  *Nodopilalogin
+	pilal      *Pilalog
 }
 
 type Nodopilalogin struct {

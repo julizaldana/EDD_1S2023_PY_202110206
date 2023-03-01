@@ -19,19 +19,14 @@ func (l *ListaDoble) estaVacia() bool {
 	}
 }
 
-func (l *ListaDoble) newNodo(estudiante *Estudiante) *Nodo {
-	return &Nodo{estudiante, nil, nil, nil}
-
-}
-
 func (l *ListaDoble) AgregarEstudiante(nuevoEstudiante *Estudiante) {
 	if l.estaVacia() {
-		nuevoNodo := l.newNodo(nuevoEstudiante) //se agrega  un nuevo nodo, un nuevo estudiante al inicio, si está vacia la lista
+		nuevoNodo := &Nodo{Estudiante: nuevoEstudiante, siguiente: nil, anterior: nil, pilal: &Pilalog{Primero: nil, Longitud: 0}} //se agrega  un nuevo nodo, un nuevo estudiante al inicio, si está vacia la lista
 		l.Inicio = nuevoNodo
 		l.Final = nuevoNodo
 		l.Longitud++
 	} else {
-		nuevoNodo := l.newNodo((nuevoEstudiante))
+		nuevoNodo := &Nodo{Estudiante: nuevoEstudiante, siguiente: nil, anterior: nil, pilal: &Pilalog{Primero: nil, Longitud: 0}}
 		tmp := l.Inicio                                     //Se comienza a recorrer la lista doble enlazada desde el inicio.
 		if nuevoEstudiante.carnet < tmp.Estudiante.carnet { //Si el carnet que se desea agregar, es menor al carnet que está en el inicio. Se agrega de primero.
 			nodoAuxiliar := l.Inicio
@@ -78,7 +73,7 @@ func (l *ListaDoble) GetEstudiante(carnet int, contra string) {
 func (l *ListaDoble) ImprimirListaDoble() {
 	aux := l.Inicio
 	for aux != nil {
-		fmt.Println("Nombre:" + aux.Estudiante.nombre + " , " + "Carnet:" + strconv.Itoa(aux.Estudiante.carnet))
+		fmt.Println("Nombre:" + aux.Estudiante.nombre + " , " + "Carnet:" + strconv.Itoa(aux.Estudiante.carnet) + " , " + "Actividad: " + valoresPila(aux.pilal))
 		fmt.Println("---------------------------------------------------------------")
 		aux = aux.siguiente
 	}
@@ -91,46 +86,35 @@ func NewLista() *ListaDoble {
 	return lista
 }
 
-type Pilalog struct {
-	Primero  *Nodopilalogin
-	Longitud int
-}
-
-func (p *Pilalog) estaVacia() bool {
-	if p.Longitud == 0 {
-		return true
+func (l *ListaDoble) AgregarPila(carnet string, contrasena string, info string) {
+	if l.Longitud == 0 {
+		fmt.Println("No hay estudiantes registrados en el sistema")
 	} else {
-		return false
+		aux := l.Inicio
+		for aux != nil {
+			if carnet == strconv.Itoa(aux.Estudiante.carnet) && contrasena == aux.Estudiante.contraseña {
+				aux.pilal.Pushlogin(info)
+				return
+			}
+			aux = aux.siguiente
+		}
+		fmt.Println("No se encontro al estudiante")
 	}
 }
 
-func (p *Pilalog) Push(Data string) {
-	if p.estaVacia() {
-		nuevoNodo := &Nodopilalogin{Data, nil}
-		p.Primero = nuevoNodo
-		p.Longitud++
+func valoresPila(pilal *Pilalog) string {
+	contenido := ""
+	aux := pilal.Primero
+	if aux != nil {
+		for aux != nil {
+			contenido += aux.Data
+			contenido += "|"
+			aux = aux.siguiente
+		}
 	} else {
-		nuevoNodo := &Nodopilalogin{Data, p.Primero}
-		p.Primero = nuevoNodo
-		p.Longitud++
+		contenido = "| |"
 	}
-}
-
-func (p *Pilalog) Pop() {
-	if p.estaVacia() {
-		fmt.Println("La pila no tiene elementos")
-	} else {
-		p.Primero = p.Primero.siguiente
-		p.Longitud--
-	}
-}
-
-func (p *Pilalog) Peek() {
-	if p.estaVacia() {
-		fmt.Println("La pila no tiene elementos")
-	} else {
-		fmt.Println(p.Primero.Data)
-	}
+	return contenido
 }
 
 func (l *ListaDoble) Graficar() {
