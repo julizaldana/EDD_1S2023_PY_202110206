@@ -7,6 +7,10 @@ import (
 	"time"
 )
 
+//NOMBRE: Julio Alejandro Zaldaña Ríos
+//CARNET: 202110206
+//LABORATORIO - ESTRUCTURAS DE DATOS - SECCION C
+
 // ESTRUCTURAS GLOBALES
 var cola_estudiantes = &estructuras.ColaEstudiantes{}
 var lista_estudiantes = &estructuras.ListaDoble{}

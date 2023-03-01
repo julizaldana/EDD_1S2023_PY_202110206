@@ -1,6 +1,8 @@
 package estructuras
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Pilalog struct {
 	Primero  *Nodopilalogin
@@ -42,4 +44,16 @@ func (p *Pilalog) Peek() {
 	} else {
 		fmt.Println(p.Primero.Data)
 	}
+}
+
+func (p *Pilalog) Graficar() string {
+	texto := ""
+	texto += "[width=1.4 label=\""
+	aux := p.Primero
+	for i := 0; i < p.Longitud; i++ {
+		texto = texto + "(" + aux.Data + ")" + "\n" + "---------------------" + "\n"
+		aux = aux.siguiente
+	}
+	texto += "\"];"
+	return texto
 }

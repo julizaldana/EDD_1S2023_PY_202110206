@@ -141,7 +141,15 @@ func (l *ListaDoble) Graficar() {
 		}
 	}
 	texto += "}\n"
-	texto += "}"
+	aux = l.Inicio
+	for i := 0; i < l.Longitud; i++ {
+		if !aux.pilal.estaVacia() {
+			texto += "nodoP" + strconv.Itoa(i) + aux.pilal.Graficar()
+			texto += "nodo" + strconv.Itoa(i) + "->" + "nodoP" + strconv.Itoa(i) + "\n"
+		}
+		aux = aux.siguiente
+	}
+	texto += "}\n"
 	crearArchivo(nombre_archivo)
 	escribirArchivoDot(texto, nombre_archivo)
 	ejecutar(nombre_imagen, nombre_archivo)
