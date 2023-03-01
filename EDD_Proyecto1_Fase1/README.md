@@ -8,17 +8,17 @@
 ### Carnet: 202110206
 -----
 
-** Resumen **
+**Resumen**
 
 En el presente proyecto, correspondiente a la fase 1. Se da a conocer una solución para la elaboración de un sistema de almacenamiento de archivos. Este es llamado EDD GoDrive. En esta fase, se cumple con las funciones básicas respectivas a un administrador, donde se podra manejar la creación de estudiantes dentro del sistema, creación de reportes con Graphviz, y la utilización y el manejo primordial de estructuras de datos, como son las colas, pilas y listas dobles enlazadas; respetando los principios de FIFO, LIFO etc. Todo elaborado con el lenguaje de programación Go/Golang.   
 
-** Explicación del funcionamiento del programa **
+**Explicación del funcionamiento del programa**
 
 Como se mencionó anteriormente, el sistema de EDD GoDrive, trabaja con funciones basicas de un administrador que podrá ingresar al sistema, ingresando como ***"admin"*** en los espacios de usuario y password en un pequeño inicio de sesión, al desplegar la aplicación.
 
 Al ingresar tendrá un menú variado. 
 
-** Dashboard Administrador **
+**Dashboard Administrador**
 
 1. __Ver Estudiantes Pendientes:__ Consiste en otro menú, donde se visualiza los estudiantes en la cola de espera para ser aceptados/rechazados. 
 2. __Ver Estudiantes del Sistema:__ Se visualizan los estudiantes aceptados y registrados en el sistema, ordenados por su numero de carnet de menor a mayor. 
@@ -31,7 +31,7 @@ Al ingresar tendrá un menú variado.
 Si se ingresa al menú de estudiantes pendientes (1):
 Se muestra la cantidad de estudiantes pendientes por atender.
 
-** Estudiantes Pendientes **
+**Estudiantes Pendientes**
 
 1. __Aceptar al estudiante:__ Se acepta al primer estudiante de cola_estudiantes (cola de espera) y se registra en la lista_estudiantes (lista doblemente enlazada)
 2. __Rechazar al estudiante:__ Se rechaza al primer estudiante de cola_estudiantes (cola de espera), se sale de la cola y vuelve a entrar a la cola de espera.
@@ -45,7 +45,7 @@ Los estudiantes ya registrados en el sistema, podrán iniciar sesión, y se alma
 
 -----
 
-** Explicación Archivos y Métodos Más importantes **
+**Explicación Archivos**
 
 Se trabajaron cuatro estructuras:
 
@@ -69,7 +69,12 @@ El codigo esta Separado de la siguiente manera
 
 -----
 
-** Ejemplo de Reportes **
+**Metodos más importantes**
+
+
+-----
+
+**Ejemplo de Reportes**
 
 
 
@@ -79,7 +84,7 @@ El codigo esta Separado de la siguiente manera
 
 -----
 
-** Conclusiones **
+**Conclusiones**
 
 1. Se considera importante el manejo de estructuras de datos, con sus respectivas funciones, nodos. Ya que facilita mejor el manejo de elementos, que una lista nativa del lenguaje Go/Golang.
 2. Es necesario saber los principios de funcionamiento de pilas y colas, para saber concretar el funcionamiento de las mismas estructuras.
