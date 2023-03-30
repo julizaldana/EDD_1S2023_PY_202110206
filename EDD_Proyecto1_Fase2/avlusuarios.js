@@ -105,9 +105,68 @@ class ArbolAVL {
     }
 
 
+    mostrarTabla(){
+        this.raiz
+    }
+
+
+    recorridoPreorden(raiz){
+        var cadena = ""
+        if(raiz !== null){
+            cadena = cadena + "\""
+            cadena = cadena + raiz.valor + "\\n" + raiz.nombre
+            cadena = cadena + "\""
+            if(raiz.izquierdo !== null){
+                cadena = cadena + " -> "
+                cadena = cadena + this.recorridoPreorden(raiz.izquierdo)
+            }
+            if(raiz.derecho !== null){
+                cadena = cadena + " -> "
+                cadena = cadena + this.recorridoPreorden(raiz.derecho)
+            }
+        }
+        return cadena
+    }
+
+    recorridoInorden(raiz){
+        var cadena = ""
+        if(raiz !== null){
+            if(raiz.izquierdo !== null){
+                cadena += this.recorridoInorden(raiz.izquierdo)
+                cadena += " -> "
+            }
+            cadena += "\""
+            cadena += raiz.valor + "\\n" + raiz.nombre
+            cadena += "\""
+            if(raiz.derecho !== null){
+                cadena += " -> "
+                cadena += this.recorridoInorden(raiz.derecho)
+            }
+        }
+        return cadena
+    }
+
+    recorridoPostOrden(raiz){
+        var cadena = ""
+        if(raiz !== null){
+            if(raiz.izquierdo !== null){
+                cadena += this.recorridoPostOrden(raiz.izquierdo)
+                cadena += " -> "
+            }
+            if(raiz.derecho !== null){
+                cadena += this.recorridoPostOrden(raiz.derecho)
+                cadena += " -> "
+            }
+            cadena += "\""
+            cadena += raiz.valor + "\\n" + raiz.nombre
+            cadena += "\""
+        }
+        return cadena
+    }
 
 
 
+    
     //FUNCIONES PARA GRAFICAR AVL GRAPHVIZ
     grafica_arbol(){
         var cadena = "";
@@ -171,6 +230,26 @@ class ArbolAVL {
         return cadena;
     }
 
+
+
+    /** 
+         * Contenido de graficar los diferentes recorridos del arbol
+         */
+    recorridosArbol(){
+        console.log("Recorrido Pre-Orden")
+        let url = 'https://quickchart.io/graphviz?graph=';
+        let body = "digraph G { graph[label = \"Pre-Orden\" rankdir = LR labelloc = t]" + this.recorridoPreorden(this.raiz) + "}";
+        $("#image1").attr("src", url + body);
+        console.log("Recorrido In-Orden")
+        body = "digraph G { graph[label = \"In-Orden\" rankdir = LR labelloc = t]" + this.recorridoInorden(this.raiz) + "}";
+        $("#image2").attr("src", url + body);
+        console.log("Recorrido Post-Orden")
+        body = "digraph G { graph[label = \"Post-Orden\" rankdir = LR labelloc = t]" + this.recorridoPostOrden(this.raiz) + "}";
+        $("#image3").attr("src", url + body);
+}
+
+
+
     eliminarTodo(){
         this.raiz = null;
     }
@@ -197,7 +276,9 @@ function limpiar(){
     binaryTreeAVL.eliminarTodo();
     let url = 'https://quickchart.io/graphviz?graph=digraph G { arbol }';
     $("#image").attr("src", url);
-    document.getElementById("carnet").value = "";
+    document.getElementById("valor").value = "";
+    document.getElementById("nombre").value = "";
+    document.getElementById("altura").value = "";
 }
 
 function refrescarArbol(){
@@ -206,6 +287,16 @@ function refrescarArbol(){
     $("#image").attr("src", url + body);
     document.getElementById("carnet").value = "";
 }
+
+
+/**
+ * Funcion para recorrer
+ */
+function recorrerArbol(){
+    binaryTreeAVL.recorridosArbol();
+}
+
+
 
 const inputElement = document.getElementById("input");
 inputElement.addEventListener("change", onChange, false);
@@ -222,3 +313,12 @@ function onReaderLoad(event){
     }
     refrescarArbol();
 }
+
+function formatToTable(event){
+    var obj = JSON.parse(event.target.result);
+    thisElement.innerHTML = "<table>";
+    for(var i = 0; i < obj.alumnos.length; i++){
+        thisElement.innerHTML = thisElement.innerHTML + "<tr><td>" + obj.alumnos[i].carnet +"</td> <td>" + obj.alumnos[i].nombre +"</td></tr>";  
+    };
+    thisElement.innerHTML = thisElement.innerHTML + "</table>";
+ }
