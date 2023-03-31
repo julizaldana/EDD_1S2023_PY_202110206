@@ -110,17 +110,16 @@ class ArbolAVL {
     }
 
 
+    // RECORRIDOS PARA MOSTRAR USUARIOS
+
     recorridoPreorden(raiz){
         var cadena = ""
         if(raiz !== null){
-            cadena = cadena + "<tr><td>"  
-            cadena = cadena + raiz.valor + "\</td><td>" + raiz.nombre 
+            cadena += "\<tr><td>" + raiz.valor + "\</td><td>" + raiz.nombre + "\</td></tr>"
             if(raiz.izquierdo !== null){
-                cadena = cadena + "\</td></tr>"
                 cadena = cadena + this.recorridoPreorden(raiz.izquierdo)
             }
             if(raiz.derecho !== null){
-                cadena = cadena + "\</td></tr>"
                 cadena = cadena + this.recorridoPreorden(raiz.derecho)
             }
         }
@@ -130,15 +129,11 @@ class ArbolAVL {
     recorridoInorden(raiz){
         var cadena = ""
         if(raiz !== null){
-            if(raiz.izquierdo !== null){
+            if(raiz.izquierdo !== null){ 
                 cadena += this.recorridoInorden(raiz.izquierdo)
-                cadena += " -> "
             }
-            cadena += "\""
-            cadena += raiz.valor + "\\n" + raiz.nombre
-            cadena += "\""
+            cadena += "\<tr><td>" + raiz.valor + "\</td><td>" + raiz.nombre + "\</td></tr>"
             if(raiz.derecho !== null){
-                cadena += " -> "
                 cadena += this.recorridoInorden(raiz.derecho)
             }
         }
@@ -150,15 +145,11 @@ class ArbolAVL {
         if(raiz !== null){
             if(raiz.izquierdo !== null){
                 cadena += this.recorridoPostOrden(raiz.izquierdo)
-                cadena += " -> "
             }
             if(raiz.derecho !== null){
                 cadena += this.recorridoPostOrden(raiz.derecho)
-                cadena += " -> "
             }
-            cadena += "\""
-            cadena += raiz.valor + "\\n" + raiz.nombre
-            cadena += "\""
+            cadena += "\<tr><td>" + raiz.valor + "\</td><td>" + raiz.nombre + "\</td></tr>"
         }
         return cadena
     }
@@ -237,22 +228,48 @@ class ArbolAVL {
     recorridosArbol(){
         console.log("Recorrido Pre-Orden")
         let url = 'https://quickchart.io/graphviz?graph=';
-        let body = "digraph G { graph[label = \"Pre-Orden\" rankdir = LR labelloc = t] node [ shape=none fontname=Helvetica ] n3 [ label = <<table border=\"1\"> <tr><td bgcolor=\"yellow\">Carnet  </td><td bgcolor=\"yellow\"> Nombre </td></tr>" + this.recorridoPreorden(this.raiz) + "</td></tr>  </table> > ] }";
+        let body = "digraph G { graph[label = \"Pre-Orden\" rankdir = LR labelloc = t] node [ shape=none fontname=Helvetica ] n3 [ label = <<table border=\"1\"> <tr><td bgcolor=\"yellow\">Carnet  </td><td bgcolor=\"yellow\"> Nombre </td></tr>" + this.recorridoPreorden(this.raiz) + " </table> > ] }";
         console.log(body)
         $("#image1").attr("src", url + body);
         console.log("Recorrido In-Orden")
-        body = "digraph G { graph[label = \"In-Orden\" rankdir = LR labelloc = t] node [ shape=none fontname=Helvetica ] n3 [ label = <<table border=\"1\"> <tr><td bgcolor=\"yellow\">Carnet  </td><td bgcolor=\"yellow\"> Nombre </td></tr>" + this.recorridoInorden(this.raiz) + "</td></tr>  </table> > ] }";
+        body = "digraph G { graph[label = \"In-Orden\" rankdir = LR labelloc = t] node [ shape=none fontname=Helvetica ] n3 [ label = <<table border=\"1\"> <tr><td bgcolor=\"yellow\">Carnet  </td><td bgcolor=\"yellow\"> Nombre </td></tr> " + this.recorridoInorden(this.raiz) + " </table> > ] }";
         $("#image2").attr("src", url + body);
         console.log("Recorrido Post-Orden")
-        body = "digraph G { graph[label = \"Post-Orden\" rankdir = LR labelloc = t] node [ shape=none fontname=Helvetica ] n3 [ label = <<table border=\"1\"> <tr><td bgcolor=\"yellow\">Carnet  </td><td bgcolor=\"yellow\"> Nombre </td></tr>" + this.recorridoPostOrden(this.raiz) + "</td></tr>  </table> > ] }";
+        body = "digraph G { graph[label = \"Post-Orden\" rankdir = LR labelloc = t] node [ shape=none fontname=Helvetica ] n3 [ label = <<table border=\"1\"> <tr><td bgcolor=\"yellow\">Carnet  </td><td bgcolor=\"yellow\"> Nombre </td></tr>" + this.recorridoPostOrden(this.raiz) + " </table> > ] }";
         $("#image3").attr("src", url + body);
 }
 
+    recorrerPreOrden(){
+        console.log("Recorrido Pre-Orden")
+        let url = 'https://quickchart.io/graphviz?graph=';
+        let body = "digraph G { graph[label = \"Pre-Orden\" rankdir = LR labelloc = t] node [ shape=none fontname=Helvetica ] n3 [ label = <<table border=\"1\"> <tr><td bgcolor=\"yellow\">Carnet  </td><td bgcolor=\"yellow\"> Nombre </td></tr>" + this.recorridoPreorden(this.raiz) + " </table> > ] }";
+        console.log(body)
+        $("#imagetable").attr("src", url + body);
+    }
+
+
+    recorrerEnOrden(){
+        console.log("Recorrido In-Orden")
+        let url = 'https://quickchart.io/graphviz?graph=';
+        let body = "digraph G { graph[label = \"In-Orden\" rankdir = LR labelloc = t] node [ shape=none fontname=Helvetica ] n3 [ label = <<table border=\"1\"> <tr><td bgcolor=\"yellow\">Carnet  </td><td bgcolor=\"yellow\"> Nombre </td></tr> " + this.recorridoInorden(this.raiz) + " </table> > ] }";
+        $("#imagetable").attr("src", url + body);
+    }
+
+
+
+    recorrerPostOrden(){
+        console.log("Recorrido Post-Orden")
+        let url = 'https://quickchart.io/graphviz?graph=';
+        let body = "digraph G { graph[label = \"Post-Orden\" rankdir = LR labelloc = t] node [ shape=none fontname=Helvetica ] n3 [ label = <<table border=\"1\"> <tr><td bgcolor=\"yellow\">Carnet  </td><td bgcolor=\"yellow\"> Nombre </td></tr>" + this.recorridoPostOrden(this.raiz) + " </table> > ] }";
+        $("#imagetable").attr("src", url + body);
+    }
 
 
     eliminarTodo(){
         this.raiz = null;
     }
+
+
 
 }
 
@@ -289,13 +306,24 @@ function refrescarArbol(){
 }
 
 
-/**
- * Funcion para recorrer
- */
+// FUNCIONES PARA RECORRER ARBOLES
+
 function recorrerArbol(){
     binaryTreeAVL.recorridosArbol();
 }
 
+
+function recorrerArbolInOrden(){
+    binaryTreeAVL.recorrerEnOrden();
+}
+
+function recorrerArbolPreOrden(){
+    binaryTreeAVL.recorrerPreOrden();
+}
+
+function recorrerArbolPosOrden(){
+    binaryTreeAVL.recorrerPostOrden();
+}
 
 
 const inputElement = document.getElementById("input");
@@ -314,11 +342,3 @@ function onReaderLoad(event){
     refrescarArbol();
 }
 
-function formatToTable(event){
-    var obj = JSON.parse(event.target.result);
-    thisElement.innerHTML = "<table>";
-    for(var i = 0; i < obj.alumnos.length; i++){
-        thisElement.innerHTML = thisElement.innerHTML + "<tr><td>" + obj.alumnos[i].carnet +"</td> <td>" + obj.alumnos[i].nombre +"</td></tr>";  
-    };
-    thisElement.innerHTML = thisElement.innerHTML + "</table>";
- }
