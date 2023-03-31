@@ -113,15 +113,14 @@ class ArbolAVL {
     recorridoPreorden(raiz){
         var cadena = ""
         if(raiz !== null){
-            cadena = cadena + "\""
-            cadena = cadena + raiz.valor + "\\n" + raiz.nombre
-            cadena = cadena + "\""
+            cadena = cadena + "<tr><td>"  
+            cadena = cadena + raiz.valor + "\</td><td>" + raiz.nombre 
             if(raiz.izquierdo !== null){
-                cadena = cadena + " -> "
+                cadena = cadena + "\</td></tr>"
                 cadena = cadena + this.recorridoPreorden(raiz.izquierdo)
             }
             if(raiz.derecho !== null){
-                cadena = cadena + " -> "
+                cadena = cadena + "\</td></tr>"
                 cadena = cadena + this.recorridoPreorden(raiz.derecho)
             }
         }
@@ -238,13 +237,14 @@ class ArbolAVL {
     recorridosArbol(){
         console.log("Recorrido Pre-Orden")
         let url = 'https://quickchart.io/graphviz?graph=';
-        let body = "digraph G { graph[label = \"Pre-Orden\" rankdir = LR labelloc = t]" + this.recorridoPreorden(this.raiz) + "}";
+        let body = "digraph G { graph[label = \"Pre-Orden\" rankdir = LR labelloc = t] node [ shape=none fontname=Helvetica ] n3 [ label = <<table border=\"1\"> <tr><td bgcolor=\"yellow\">Carnet  </td><td bgcolor=\"yellow\"> Nombre </td></tr>" + this.recorridoPreorden(this.raiz) + "</td></tr>  </table> > ] }";
+        console.log(body)
         $("#image1").attr("src", url + body);
         console.log("Recorrido In-Orden")
-        body = "digraph G { graph[label = \"In-Orden\" rankdir = LR labelloc = t]" + this.recorridoInorden(this.raiz) + "}";
+        body = "digraph G { graph[label = \"In-Orden\" rankdir = LR labelloc = t] node [ shape=none fontname=Helvetica ] n3 [ label = <<table border=\"1\"> <tr><td bgcolor=\"yellow\">Carnet  </td><td bgcolor=\"yellow\"> Nombre </td></tr>" + this.recorridoInorden(this.raiz) + "</td></tr>  </table> > ] }";
         $("#image2").attr("src", url + body);
         console.log("Recorrido Post-Orden")
-        body = "digraph G { graph[label = \"Post-Orden\" rankdir = LR labelloc = t]" + this.recorridoPostOrden(this.raiz) + "}";
+        body = "digraph G { graph[label = \"Post-Orden\" rankdir = LR labelloc = t] node [ shape=none fontname=Helvetica ] n3 [ label = <<table border=\"1\"> <tr><td bgcolor=\"yellow\">Carnet  </td><td bgcolor=\"yellow\"> Nombre </td></tr>" + this.recorridoPostOrden(this.raiz) + "</td></tr>  </table> > ] }";
         $("#image3").attr("src", url + body);
 }
 
