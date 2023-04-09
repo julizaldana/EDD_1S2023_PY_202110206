@@ -1,0 +1,88 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | EDD GoDrive</title>
+<style>
+
+    .body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background: #28AC9C;
+        color: #fff;    
+    }
+
+    img {
+        width: 20%;
+    }
+
+    h1 {
+        color: black;
+        font-family: 'Courier New', sans-serif; /*tipografía texto*/        
+        font-size: 18px;           
+    }
+
+    .images {
+        display: block;
+        margin: 0 auto;
+        place-items: center;
+    }
+
+
+    .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    }
+
+
+    hr {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    border: 2;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+
+</style>
+
+</head>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+<body>
+<header class="p-3 bg-success text-white">
+    <h1>
+        ¡Crea carpetas, archivos y mucho más!
+        <img src="edddrive.png" alt="edddrive logo" width="130" height="130"> 
+    </h1>
+</header>
+<br>
+<div class="container">
+    <div class="input-group mb-3">
+        <button class="btn btn-outline-success" id="button-addon1" type="button" onclick="agregarVarios()">Agregar Carpeta</button>
+        <button class="btn btn-outline-success" id="button-addon1" type="button" onclick="mostraCarpetas()">Mostrar Carpeta</button>
+        <input type="text" id="ruta" class="form-control" placeholder="Navega entre tus carpetas ya creadas, por Ej. /Documentos/USAC" aria-label="Example text with button addon" aria-describedby="button-addon1">
+    </div>
+    <div>
+        <input type="text" id="carpeta" class="form-control" placeholder="Colocar un nombre para la carpeta a crear..." aria-label="Example text with button addon" aria-describedby="button-addon1">
+    </div>
+    <div class="images">
+        <img id="image" class="center">
+    </div>
+</div>
+
+
+
+<script src="arboln.js">
+</script>
+</body>
+</html>

@@ -11,6 +11,7 @@ class nodoArbol {
         this.carpetar = carpetar; //carpeta raiz = carpeta raiz de estudiante
         this.altura = 1;
         this.factor_equilibrio = 0;
+        this.arbol = new arbolnario()
     }
 }
 
@@ -337,8 +338,140 @@ function onChange(event) {
 function onReaderLoad(event){
     var obj = JSON.parse(event.target.result);
     for(var i = 0; i < obj.alumnos.length; i++){
+        localStorage.setItem('alumnos',JSON.stringify(obj.alumnos))
         binaryTreeAVL.insertaValor(obj.alumnos[i].carnet,obj.alumnos[i].nombre,obj.alumnos[i].password,obj.alumnos[i].Carpeta_Raiz)
     }
+    localStorage.setItem('arbol',JSON.stringify(binaryTreeAVL))
+    console.log(localStorage.getItem('arbol'))
     refrescarArbol();
 }
 
+
+function recorridoAVL(raiz){
+    usuario = document.getElementById("usuario").value;
+    password = document.getElementById("contrasena").value;
+
+    if(raiz !== null){
+        if(raiz.izquierdo !== null){
+            this.recorridoAVL(raiz.izquierdo)
+            if (usuario == raiz.izquierdo.valor && password == raiz.izquierdo.password) {
+                alert("Se encontró al estudiante en el sistema!")
+                window.location = "userpage.html"
+            } else {
+                alert("Buscando al estudiante...")
+            }
+        }
+        if(raiz.derecho !== null){
+            this.recorridoAVL(raiz.derecho)
+            if (usuario == raiz.derecho.valor && password == raiz.derecho.password) {
+                alert("Se encontró al estudiante en el sistema!")
+                window.location = "userpage.html"
+            } 
+            else {
+                alert("Buscando al estudiante...")
+            }
+        }
+        if (usuario == raiz.valor && password == raiz.password) {
+            alert("Se encontró al estudiante en el sistema!")
+            window.location = "userpage.html";
+        }
+    } 
+}
+
+
+
+function login(e){
+    event.preventDefault();
+
+    usuario = document.getElementById("usuario").value;
+    password = document.getElementById("contrasena").value;
+
+    var arbolavl = localStorage.getItem('arbol');
+    var data = JSON.parse(arbolavl);
+    console.log(arbolavl);
+    console.log(data.raiz);
+    console.log(data.raiz.derecho);
+   
+    if (usuario == "Admin" && password == "Admin") { 
+        window.location = "dashboardadmin.html";
+    } else if (data.raiz != null) {
+        recorridoAVL(data.raiz)
+    } else {
+        alert("El usuario no se encuentra en el sistema")
+    }
+}
+
+
+
+
+
+
+
+
+//////////////////////////////////
+
+function logs(){
+    var user, password
+    user = document.getElementById("usuario").value;
+    password = document.getElementById("contrasena").value;
+
+    var arbolavl = localStorage.getItem('alumnos');
+    var data = JSON.parse(arbolavl);
+    console.log(arbolavl);
+
+    //for (var i = 0; i < stringify.length; i++) {
+        //console.log(stringify[i]['valor']);
+        //console.log(stringify[i]['password']);
+    //}
+
+    if (user == "Admin" && password == "Admin") { 
+        window.location = "dashboardadmin.html";
+    } else if (user == data.carnet && password == data.password){
+        window.location = "userpage.html";
+        
+    } else {
+        alert("El usuario no se encuentra en el sistema")
+    }
+
+}
+
+
+
+
+
+///////////////////// FUNCIONES PARA ARBOL N-ARIO
+
+class nodoarbolnario {
+    constructor(valor, id){
+        this.siguiente = null;
+        this.valor = valor; //valor -> carnet
+        this.primero = null;
+        this.id = id;
+        this.matriz = matriz()
+    }
+}
+
+class arbolnario {
+
+}
+
+
+
+///////////////////// FUNCIONES PARA MATRIZ DISPERSA
+
+
+class nodomatriz {
+    constructor(posX, posY, nombre_archivo){
+        this.siguiente = null;
+        this.anterior = null;
+        this.abajo = null;
+        this.arriba = null;
+        this.posX = posX;
+        this.posY = posY;
+        this.posicion = nombre_archivo;
+    }
+}
+
+class matriz {
+
+}
