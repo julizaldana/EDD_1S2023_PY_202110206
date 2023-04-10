@@ -62,7 +62,8 @@
 <header class="p-3 bg-success text-white">
     <h1>
         ¡Crea carpetas, archivos y mucho más!
-        <img src="edddrive.png" alt="edddrive logo" width="130" height="130"> 
+        <img src="edddrive.png" alt="edddrive logo" width="130" height="130">
+        <img id="imageuser" class="center">
     </h1>
 </header>
 <br>
@@ -70,18 +71,31 @@
     <div class="input-group mb-3">
         <button class="btn btn-outline-success" id="button-addon1" type="button" onclick="agregarVarios()">Agregar Carpeta</button>
         <button class="btn btn-outline-success" id="button-addon1" type="button" onclick="mostraCarpetas()">Mostrar Carpeta</button>
+        <button class="btn btn-outline-success" id="button-addon1" type="button" onclick="comprobarCarnet()">Comprobar Usuario</button>
+        <button class="btn btn-outline-success" type="button" id="button-addon2" onclick="cargarArchivo()">Cargar Archivo</button>
+        <button class="btn btn-outline-success" type="button" id="button-addon2" onclick="reporteMatriz()">Mostrar Reporte Matriz</button>
+        <button class="btn btn-outline-success" type="button" id="button-addon2" onclick="asignarPermisos()">Asignar Permisos</button>
+        <input type="text" id="permiso" class="form-control" placeholder="Ej. arhivo.png-201700918-rw" aria-label="Example text with button addon" aria-describedby="button-addon2">
+        <input type="text" id="carnetp" class="form-control" placeholder="Ingresa tu carnet para dirigir tus carpetas a tu usuario" aria-label="Example text with button addon" aria-describedby="button-addon1">
         <input type="text" id="ruta" class="form-control" placeholder="Navega entre tus carpetas ya creadas, por Ej. /Documentos/USAC" aria-label="Example text with button addon" aria-describedby="button-addon1">
     </div>
     <div>
         <input type="text" id="carpeta" class="form-control" placeholder="Colocar un nombre para la carpeta a crear..." aria-label="Example text with button addon" aria-describedby="button-addon1">
     </div>
+    <div>
+        <input type="file" id="input" multiple />
+    </div>
     <div class="images">
         <img id="image" class="center">
     </div>
 </div>
+<div>
+    <img id="imagematriz" class="center">
+    <iframe id="pdf" width=100% height=600></iframe>
+</div>
 
 
-
+<script src = "avlusuarios.js"></script>
 <script src="arboln.js">
 </script>
 </body>
