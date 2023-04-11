@@ -1,17 +1,19 @@
+
 ///////////////////// FUNCIONES PARA ARBOL N-ARIO
 
-class nodoArbol{
+class nodoArbolN{
     constructor(valor, id){
         this.siguiente = null;
         this.valor = valor; //valor -> carpeta raiz
         this.primero = null;
         this.id = id;
+        //this.matriz = new Matriz()
     }
 }
 
 class ArbolNArio{
     constructor(){
-        this.raiz = new nodoArbol("/", 0)
+        this.raiz = new nodoArbolN("/", 0)
         this.nodo_creados = 1;
     }
 
@@ -102,7 +104,7 @@ class ArbolNArio{
         /**
          * creamos el nuevo nodo y aumentamos la cantidad de nodos creados
          */
-        const nuevoNodo = new nodoArbol(carpeta_nueva, this.nodo_creados)
+        const nuevoNodo = new nodoArbolN(carpeta_nueva, this.nodo_creados)
         this.nodo_creados++
         //Corroboramos si la insercion es en la raiz y si la raiz no tiene ninguna carpeta
         if(lista_carpeta[1] === "" && this.raiz.primero === null){
@@ -153,12 +155,14 @@ class ArbolNArio{
      * 5 - No existe ninguna carpeta en la raiz
      * 
      */
+
     insertarValor(ruta, carpeta_nueva){
         let lista_carpeta = ruta.split('/')
         let existe_carpeta = this.BuscarCarpeta(carpeta_nueva, lista_carpeta)
         switch(existe_carpeta){
             case 1:
-                alert("La carpeta ya existe")
+                let copia_carpeta = "Copia" + carpeta_nueva       
+                this.insertarHijos(copia_carpeta, lista_carpeta)
                 break;
             case 2:
                 this.insertarHijos(carpeta_nueva, lista_carpeta)
@@ -193,13 +197,13 @@ class ArbolNArio{
         let nodo = 1;
         let nodo_padre = 0;
         cadena += "nodo" + nodo_padre + "[label=\"" + this.raiz.valor  + "\"] "
-        cadena += this.valoresSiguietes(this.raiz.primero, nodo, nodo_padre)
+        cadena += this.valoresSiguientes(this.raiz.primero, nodo, nodo_padre)
         cadena += this.conexionRamas(this.raiz.primero, 0)
-        return cadena;
+        return cadena;  
     }
 
 
-    valoresSiguietes(raiz, nodo, nodo_padre){
+    valoresSiguientes(raiz, nodo, nodo_padre){
         let cadena = ""
         let aux = raiz
         let nodo_padre_aumento = nodo_padre
@@ -211,7 +215,7 @@ class ArbolNArio{
             aux = raiz
             while(aux){
                 nodo_padre_aumento++
-                cadena += this.valoresSiguietes(aux.primero, this.nodo_creados, nodo_padre_aumento)
+                cadena += this.valoresSiguientes(aux.primero, this.nodo_creados, nodo_padre_aumento)
                 aux = aux.siguiente
             }
         }
@@ -235,7 +239,7 @@ class ArbolNArio{
         return cadena
     }
 
-    /** Modificacion 30/03/2023 */
+
     BuscarCarpetaV2(lista_carpeta){
         //Directorio Actual seria la Raiz
         if(lista_carpeta[1] === "" && this.raiz.primero !== null){
@@ -303,15 +307,22 @@ function agregarVarios(){
     let carpeta = document.getElementById("carpeta").value
     try{
         arbolnario.insertarValor(ruta,carpeta)
+        localStorage.setItem('arbolnario',JSON.stringify(arbolnario))
+        console.log(localStorage.getItem('arbolnario'))
+        list.insertarLista("Se creó la carpeta: " + carpeta + " Fecha:" + date +  " Hora:" + time)
+        localStorage.setItem('listacircular',JSON.stringify(list))
+        console.log(localStorage.getItem('listacircular'))
     }catch(error){
         alert("Hubo un error al insertar el nodo")
     }
     document.getElementById("carpeta").value = "";
-    refrescarArbol();  
+    console.log(list)
+    console.log(arbolnario)
+    refrescarArbolN();  
 
 }
 
-function refrescarArbol(){
+function refrescarArbolN(){
     let url = 'https://quickchart.io/graphviz?graph=';
     let body = arbolnario.grafica_arbol();
     $("#image").attr("src", url + body);
@@ -321,10 +332,17 @@ function refrescarArbol(){
 function mostraCarpetas(){
     let ruta = document.getElementById("ruta").value
     arbolnario.mostrarCarpetasActuales(ruta)
-    var arbolavl = localStorage.getItem('alumnos')
-    var stringify = JSON.parse(arbolavl);
-    for (var i = 0; i < stringify.raiz.length; i++) {
-        console.log(stringify[i]['arbol']);
-    }
 }
 
+
+/////////////////////////
+
+
+function mostrarUsuario(){
+
+}
+
+
+
+
+/////////

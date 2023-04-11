@@ -63,12 +63,54 @@ class ListaCircular {
         }
     }
     
+
+    graficaLC(){
+        var cadena = "";
+        var aux = this.inicio
+        for (var i = 0; i < this.longitud; i++) {
+            cadena = cadena + "nodo" + i + "[width=1.4 label=\"" + aux.data + "\"];\n"
+            aux = aux.siguiente
+        }
+        for (var i = 0; i < this.longitud-1; i++) {
+            cadena = cadena + "nodo" + i + " -> nodo" + (i+1) + ";\n"
+            if ((i+1) == this.longitud-1) {
+                cadena = cadena + "nodo" + (i+1) + "->" + "nodo0;"
+            }
+    
+        } 
+        console.log(cadena)
+        return cadena;
+    }
+
+
 }
 
+
+
 const list = new ListaCircular();
-list.insertarLista("ARCHIVO 1")
-list.insertarLista("ARCHIVO 2")
-list.insertarLista("CARPETA 1")
+
+//Se utiliza Date() para utilizar sus funciones de tiempo y hora.
+let carpeta = document.getElementById("carpeta").value;
+var archivo = nombreArchivo;
+var today = new Date();
+var date = today.getDate()+'/'+(today.getMonth()+1)+'/'+today.getFullYear()
+var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+var dateTime = date+' '+time;
+
+
+function grafica_listacircular(){
+    console.log("Lista Circular")
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let body = "digraph {\n" +  "rankdir=LR; \n" + "node[shape = record]; \n" 
+    body = body + list.graficaLC()
+    body = body +  "}\n"
+    
+    console.log(body)
+    $("#imagelistacircular").attr("src", url + body);
+}
+
+
+
 
 
 function menu() {

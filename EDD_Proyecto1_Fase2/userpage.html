@@ -69,21 +69,51 @@
 <br>
 <div class="container">
     <div class="input-group mb-3">
-        <button class="btn btn-outline-success" id="button-addon1" type="button" onclick="agregarVarios()">Agregar Carpeta</button>
-        <button class="btn btn-outline-success" id="button-addon1" type="button" onclick="mostraCarpetas()">Mostrar Carpeta</button>
-        <button class="btn btn-outline-success" id="button-addon1" type="button" onclick="comprobarCarnet()">Comprobar Usuario</button>
-        <button class="btn btn-outline-success" type="button" id="button-addon2" onclick="cargarArchivo()">Cargar Archivo</button>
-        <button class="btn btn-outline-success" type="button" id="button-addon2" onclick="reporteMatriz()">Mostrar Reporte Matriz</button>
-        <button class="btn btn-outline-success" type="button" id="button-addon2" onclick="asignarPermisos()">Asignar Permisos</button>
-        <input type="text" id="permiso" class="form-control" placeholder="Ej. arhivo.png-201700918-rw" aria-label="Example text with button addon" aria-describedby="button-addon2">
+        <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Creación de Carpetas
+            </button>
+            <input type="text" id="ruta" class="form-control" placeholder="Ej. /Documentos/Prueba" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" id="button-addon1" href="#" onclick="agregarVarios()">Agregar Carpeta</a></li>
+              <li><a class="dropdown-item" id="button-addon1" href="#" onclick="mostraCarpetas()">Mostrar Carpeta</a></li>
+            </ul>
+            <div>
+                <input type="text" id="carpeta" class="form-control" placeholder="Ej. Imagenes" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Creación de Archivos
+            </button>
+            <input type="text" id="permiso" class="form-control" placeholder="arhivo.png-201700918-rw" aria-label="Example text with button addon" aria-describedby="button-addon2">
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="cargarArchivo()">Cargar Archivo</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="reporteMatriz()">Mostrar Reporte Matriz</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="asignarPermisos()">Asignar Permisos</a></li>
+            </ul>
+        </div>
+        <!-- <button class="btn btn-outline-success" id="button-addon1" type="button" onclick="comprobarCarnet()">Comprobar Usuario</button> -->
+        <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Lista Acciones
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="grafica_listacircular()">Mostrar Reporte Lista Circular</a></li>
+            </ul>
+        </div>
+        <!--
         <input type="text" id="carnetp" class="form-control" placeholder="Ingresa tu carnet para dirigir tus carpetas a tu usuario" aria-label="Example text with button addon" aria-describedby="button-addon1">
-        <input type="text" id="ruta" class="form-control" placeholder="Navega entre tus carpetas ya creadas, por Ej. /Documentos/USAC" aria-label="Example text with button addon" aria-describedby="button-addon1">
+        -->
     </div>
     <div>
-        <input type="text" id="carpeta" class="form-control" placeholder="Colocar un nombre para la carpeta a crear..." aria-label="Example text with button addon" aria-describedby="button-addon1">
+        <div style="width: 22rem;">
+            <label class="form-label" for="customFile">Carga de archivos</label>
+            <input type="file" class="form-control bg-success text-white" id="input" autocompleted="">
+        </div>
     </div>
-    <div>
-        <input type="file" id="input" multiple />
+    <div class="images">
+        <img id="imagelistacircular" class="center">
     </div>
     <div class="images">
         <img id="image" class="center">
@@ -95,8 +125,10 @@
 </div>
 
 
+
+<script src = "matrizdispersa.js"></script>
 <script src = "avlusuarios.js"></script>
-<script src="arboln.js">
-</script>
+<script src="arboln.js"></script>
+<script src="listacircular.js"></script>
 </body>
 </html>

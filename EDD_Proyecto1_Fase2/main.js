@@ -10,3 +10,17 @@ function login(){
     }
 
 }
+
+function check() {
+
+    // stored data from the register-form
+    var carne = localStorage.getItem('carnet');
+    var pass = localStorage.getItem('password');
+
+    // check if stored data from register-form is equal to data from login form
+    if(user == carne && password == pass) {
+        alert('You are loged in.');
+    }else {
+        alert('ERROR.');
+    }
+}
