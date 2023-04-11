@@ -425,9 +425,8 @@ function mostrarLogUser(){
 
 
 //LOGIN PARA USUARIOS DE ARBOL AVL
-function login(e){
-    event.preventDefault();
-
+function login(){
+    var usuario, password
     usuario = document.getElementById("usuario").value;
     password = document.getElementById("contrasena").value;
 
