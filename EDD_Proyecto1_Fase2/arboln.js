@@ -7,7 +7,7 @@ class nodoArbolN{
         this.valor = valor; //valor -> carpeta raiz
         this.primero = null;
         this.id = id;
-        //this.matriz = new Matriz()
+        this.matriz = new Matriz()
     }
 }
 
@@ -17,6 +17,8 @@ class ArbolNArio{
         this.nodo_creados = 1;
     }
 
+    
+    
     BuscarCarpeta(carpeta_nueva, lista_carpeta){
         //Si la nueva carpeta se creara en la raiz, se buscara si existe o no
         if(lista_carpeta[1] === "" && this.raiz.primero !== null){
@@ -222,6 +224,23 @@ class ArbolNArio{
         return cadena
     }
 
+    getCarpeta(valor){
+        let aux = this.raiz
+        if(aux !== null){
+            if(aux.valor == valor){
+                return aux
+            } 
+            if(aux.primero.valor == valor) {
+                return aux.primero
+            }
+            if (aux.siguiente.valor == valor) {
+                return aux.siguiente
+            }
+            aux = aux.siguiente
+        }
+        return null
+    } 
+
     conexionRamas(raiz, padre){
         let cadena = ""
         let aux = raiz
@@ -284,6 +303,53 @@ class ArbolNArio{
         }
     }
 
+
+
+    getCarpetaV2(carpeta){
+        //Directorio Actual seria la Raiz
+        if(carpeta[1] === "" && this.raiz.primero !== null){
+            return this.raiz
+        }
+        //Directorio Actual seria Raiz pero no contiene elementos
+        else if (carpeta[1] === "" && this.raiz.primero === null){
+            return null
+        }
+        //Actual no es raiz pero tampoco hay elementos en raiz
+        else if(carpeta[1] !== "" && this.raiz.primero === null){
+            return null
+        }
+        //Buscamos el directorio padre y revisar si en sus hijos existe la carpeta
+        else if(carpeta[1] !== "" && this.raiz.primero !== null){
+            let aux = this.raiz.primero
+            let nivel = carpeta.length
+            let posicion = 1; 
+            for(var i = 1; i < nivel; i++){
+                if(aux !== null){
+                    while(aux){
+                        if(posicion < carpeta.length && carpeta[posicion] === aux.valor){
+                            posicion++
+                            if(aux.primero !== null && posicion < carpeta.length){
+                                aux = aux.primero
+                            }
+                            break;
+                        }else{
+                            aux = aux.siguiente
+                        }
+                    }
+                }else{
+                    break;
+                }
+            }
+            if(aux !== null){
+                return aux
+            }else{
+                return null
+            }
+
+        }
+    }
+
+
     mostrarCarpetasActuales(ruta){
         let lista_carpeta = ruta.split('/')
         let existe_carpeta = this.BuscarCarpetaV2(lista_carpeta)
@@ -299,7 +365,23 @@ class ArbolNArio{
             console.log("Hubo un error")
         }
     }
+
+    insertarCarpeta(carpeta){
+        var carpet = carpeta.split('/')
+        let existe_carpeta = this.BuscarCarpetaV2(carpet)
+        if (existe_carpeta !== null) {
+            existe_carpeta.matriz.insertarArchivo(nombreArchivo,1)
+            list.insertarLista("Se creó el achivo: " + nombreArchivo + " Fecha:" + date + " Hora:" + time);
+            reporteMatriz();
+        } else {
+            alert("No existe la carpeta")
+        }
+    }
 }
+
+
+
+
 
 const arbolnario = new ArbolNArio()
 function agregarVarios(){
@@ -335,12 +417,16 @@ function mostraCarpetas(){
 }
 
 
+function insertFolder(){
+    let carpeta = document.getElementById("folder").value
+    arbolnario.insertarCarpeta(carpeta)
+    console.log(arbolnario)
+}
+
 /////////////////////////
 
 
-function mostrarUsuario(){
 
-}
 
 
 

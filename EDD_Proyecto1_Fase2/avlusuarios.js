@@ -2,7 +2,7 @@
 //Se van ordenando conforme orden de carnet, de archivo JSON.
 
 class nodoArbol {
-    constructor(valor,nombre,password,carpetar){
+    constructor(valor,nombre,password,carpetar,arbolnario,listacircular){
         this.izquierdo = null;
         this.derecho = null;
         this.valor = valor; //valor = carnet estudiante
@@ -11,7 +11,9 @@ class nodoArbol {
         this.carpetar = carpetar; //carpeta raiz = carpeta raiz de estudiante
         this.altura = 1;
         this.factor_equilibrio = 0;
-        this.arbol = new ArbolNArio()
+        this.arbol = arbolnario;
+        this.listacircular = listacircular;
+        //this.arboln = new ArbolNArio()
         //this.listac = new ListaCircular()
     }
 
@@ -20,8 +22,6 @@ class nodoArbol {
     }
 
 }
-
-
 
 class ArbolAVL {
     constructor(){
@@ -108,8 +108,8 @@ class ArbolAVL {
     }
 
 
-    insertaValor(valor,nombre,passsword,carpetar){
-        const nuevoNodo = new nodoArbol(valor,nombre,passsword,carpetar);
+    insertaValor(valor,nombre,passsword,carpetar,arbolnario,list){
+        const nuevoNodo = new nodoArbol(valor,nombre,passsword,carpetar,arbolnario,list);
         this.raiz = this.insertarValorHijo(nuevoNodo,this.raiz);
     }
 
@@ -353,12 +353,20 @@ function onReaderLoad(event){
     var obj = JSON.parse(event.target.result);
     for(var i = 0; i < obj.alumnos.length; i++){
         localStorage.setItem('alumnos',JSON.stringify(obj.alumnos))
-        binaryTreeAVL.insertaValor(obj.alumnos[i].carnet,obj.alumnos[i].nombre,obj.alumnos[i].password,obj.alumnos[i].Carpeta_Raiz)
+        binaryTreeAVL.insertaValor(obj.alumnos[i].carnet,obj.alumnos[i].nombre,obj.alumnos[i].password,obj.alumnos[i].Carpeta_Raiz,'{}','{}')
     }
     localStorage.setItem('arbol',JSON.stringify(binaryTreeAVL))
     console.log(localStorage.getItem('arbol'))
     refrescarArbol();
 }
+
+
+function llenarAVL(){
+
+}
+
+
+
 
 
 //RECORRIDO DE ARBOL AVL PARA FUNCION LOGIN DE USUARIOS
@@ -453,7 +461,7 @@ function login(){
 
 //////////////////////////////////
 
-function logs(){
+function cargarLocalaAVL(){
     var user, password
     user = document.getElementById("usuario").value;
     password = document.getElementById("contrasena").value;
@@ -477,6 +485,4 @@ function logs(){
     }
 
 }
-
-
 
