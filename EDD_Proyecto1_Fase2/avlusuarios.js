@@ -391,6 +391,8 @@ function recorridoAVL(raiz){
         }
         alert("Usuario/Contraseña incorrectos")
 
+    } else {
+        alert("No hay estudiantes registados")
     }
     
 }
@@ -433,8 +435,6 @@ function login(){
     var arbolavl = localStorage.getItem('arbol');
     var data = JSON.parse(arbolavl);
     console.log(arbolavl);
-    console.log(data.raiz);
-    console.log(data.raiz.derecho);
    
     if (usuario == "Admin" && password == "Admin") { 
         window.location = "dashboardadmin.html";
