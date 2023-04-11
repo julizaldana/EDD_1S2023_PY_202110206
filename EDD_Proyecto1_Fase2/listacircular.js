@@ -98,6 +98,7 @@ var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds(
 var dateTime = date+' '+time;
 
 
+
 function grafica_listacircular(){
     console.log("Lista Circular")
     let url = 'https://quickchart.io/graphviz?graph=';
@@ -105,9 +106,9 @@ function grafica_listacircular(){
     body = body + list.graficaLC()
     body = body +  "}\n"
     
-    console.log(body)
     $("#imagelistacircular").attr("src", url + body);
 }
+
 
 
 

@@ -377,6 +377,33 @@ class ArbolNArio{
             alert("No existe la carpeta")
         }
     }
+
+    eliminarCarpeta(carpeta){
+        var carpet = carpeta.split('/')
+        let existe_carpeta = this.BuscarCarpetaV2(carpet)
+
+        if(existe_carpeta !== null){  
+            let aux = existe_carpeta.primero
+            if(aux.valor == carpeta){
+                existe_carpeta.primero = aux.siguiente;
+            }
+            else{
+                while(aux){
+                    if(aux.siguiente.valor == carpeta && aux.siguiente.siguiente === null){
+                        aux.siguiente = null;
+                        break;
+                    }
+                    else if(aux.siguiente.valor == carpeta){
+                        aux.siguiente = aux.siguiente.siguiente;
+                        break;
+                    }
+                    aux = aux.siguiente
+                }
+            }          
+        }
+  
+    }
+    
 }
 
 
@@ -420,6 +447,12 @@ function mostraCarpetas(){
 function insertFolder(){
     let carpeta = document.getElementById("folder").value
     arbolnario.insertarCarpeta(carpeta)
+    console.log(arbolnario)
+}
+
+function deleteFolder(){
+    let carpeta = document.getElementById("folder").value
+    arbolnario.eliminarCarpeta(carpeta)
     console.log(arbolnario)
 }
 

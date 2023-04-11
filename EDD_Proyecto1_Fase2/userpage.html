@@ -101,10 +101,33 @@
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               <li><a class="dropdown-item" id="button-addon2" href="#" onclick="grafica_listacircular()">Mostrar Reporte Lista Circular</a></li>
               <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Insertar Archivo en Carpeta</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Eliminar Carpeta</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Agregar AVL</a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Lista Acciones
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="grafica_listacircular()">Mostrar Reporte Lista Circular</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Insertar Archivo en Carpeta</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Eliminar Carpeta</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="agregarAVL()">Agregar AVL</a></li>
             </ul>
         </div>
         <div>
-            <input type="text" id="folder" class="form-control" placeholder="colocar id arbol nario" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            <input type="text" id="folder" class="form-control" placeholder="Ingresar Carpeta" aria-label="Example text with button addon" aria-describedby="button-addon1">
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Subir a AVL
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <input type="text" id="nombre" class="form-control" placeholder="Ingresar nombre" aria-label="Example text with button addon" aria-describedby="button-addon2">
+                <input type="text" id="carnet" class="form-control" placeholder="Ingresar carnet" aria-label="Example text with button addon" aria-describedby="button-addon2">
+                <input type="text" id="password" class="form-control" placeholder="Ingresar password" aria-label="Example text with button addon" aria-describedby="button-addon2">
+            </ul>
         </div>
         <!--
         <input type="text" id="carnetp" class="form-control" placeholder="Ingresa tu carnet para dirigir tus carpetas a tu usuario" aria-label="Example text with button addon" aria-describedby="button-addon1">

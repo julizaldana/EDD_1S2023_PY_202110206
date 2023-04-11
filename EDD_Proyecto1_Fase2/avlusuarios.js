@@ -321,6 +321,8 @@ function refrescarArbol(){
 }
 
 
+
+
 // FUNCIONES PARA RECORRER ARBOLES
 
 function recorrerArbol(){
@@ -455,7 +457,15 @@ function login(){
 
 
 
-
+function agregarAVL(){
+    var carnet = document.getElementById("carnet").value;
+    var nombre = document.getElementById("nombre").value;
+    var password =  document.getElementById("password").value;
+    binaryTreeAVL.insertaValor(carnet,nombre,password,'/',arbolnario,list)
+    console.log(arbolnario)
+    console.log(list)
+    console.log(binaryTreeAVL)
+}
 
 
 
