@@ -1,0 +1,108 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | EDD GoDrive | Fase 3</title>
+<style>
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.containerlog{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+    background: #28AC9C;
+    color: #fff;    
+}
+
+input{
+    outline: 0;
+    background-color: #f2f2f2;
+    width: 100%;
+    border: 0;
+    margin: 0 0 15px;
+    padding: 15px;
+    box-sizing: border-box;
+    font-family: 'Courier New', sans-serif; /*tipografía texto*/
+    font-size: 14px;
+}
+
+.boton{
+    background-color: #4CAF50;
+    text-transform: uppercase;
+    outline: 0;
+    width: 100%; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-family: 'Courier New', sans-serif; /*tipografía texto*/
+    font-size: 14px;
+    -webkit-transition: all 0.3 ease;
+    transition: all 0.3 ease;
+    cursor: pointer;
+}
+
+.form-group{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    background-color: #fff;
+    max-width: 360px;
+    padding: 45px;
+    text-align: center;
+    box-shadow: 0 0 20px 0 rgba(0,0,0,0.2),0 5px 5px 0 rgba(0,0,0,0.2);
+}
+
+h1 {
+        color: black;
+        font-family: 'Courier New', sans-serif; /*tipografía texto*/        
+        font-size: 18px;           
+    }
+
+h2 {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+
+</style>
+</head>
+<body>
+    <div class="containerlog">
+        <header class="p-3 bg-success text-white">
+            <h1>
+                Inicio de Sesión - FASE 3
+            </h1>
+            <h2>
+                <img src="edddrive.png" alt="edddrive logo" width="300" height="200"> 
+            </h2>
+        </header>
+        <br>
+        <div class="form-group">
+            <input id="usuario" type="text" class="form-control" name="username" placeholder="Usuario">
+            <input id="contrasena" type="password" class="form-control" name="password" placeholder="Contraseña">
+            <br>
+            <a class="boton" onclick="login()">INICIAR SESIÓN</a>
+        </div>
+    </div>
+    
+
+</body>
+</html>
