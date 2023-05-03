@@ -1,0 +1,161 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | EDD GoDrive | Fase 3</title>
+<style>
+
+    .body{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background: #28AC9C;
+        color: #fff;    
+    }
+
+    img {
+        width: 20%;
+    }
+
+    h1 {
+        color: black;
+        font-family: 'Courier New', sans-serif; /*tipografía texto*/        
+        font-size: 18px;           
+    }
+
+    .images {
+        display: block;
+        margin: 0 auto;
+        place-items: center;
+    }
+
+
+    .center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    }
+
+
+    hr {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+    border: 2;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+
+</style>
+
+</head>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.min.js" integrity="sha384-Atwg2Pkwv9vp0ygtn1JAojH0nYbwNJLPhwyoVbhoPwBhjQPR5VtM2+xf0Uwh9KtT" crossorigin="anonymous"></script>
+<body>
+<header class="p-3 bg-success text-white">
+    <h1>
+        ¡Crea carpetas, archivos y mucho más!
+        <img src="edddrive.png" alt="edddrive logo" width="130" height="130">
+        <img id="imageuser" class="center">
+    </h1>
+</header>
+<br>
+<div class="container">
+    <div class="input-group mb-3">
+        <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Creación de Carpetas
+            </button>
+            <input type="text" id="ruta" class="form-control" placeholder="Ej. /Documentos/Prueba" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" id="button-addon1" href="#" onclick="agregarVarios()">Agregar Carpeta</a></li>
+              <li><a class="dropdown-item" id="button-addon1" href="#" onclick="mostraCarpetas()">Mostrar Carpeta</a></li>
+            </ul>
+            <div>
+                <input type="text" id="carpeta" class="form-control" placeholder="Ej. Imagenes" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            </div>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Creación de Archivos
+            </button>
+            <input type="text" id="permiso" class="form-control" placeholder="arhivo.png-201700918-rw" aria-label="Example text with button addon" aria-describedby="button-addon2">
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="cargarArchivo()">Cargar Archivo</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="reporteMatriz()">Mostrar Reporte Matriz</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="asignarPermisos()">Asignar Permisos</a></li>
+            </ul>
+        </div>
+        <!-- <button class="btn btn-outline-success" id="button-addon1" type="button" onclick="comprobarCarnet()">Comprobar Usuario</button> -->
+        <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Lista Acciones
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="grafica_listacircular()">Mostrar Reporte Lista Circular</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Insertar Archivo en Carpeta</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Eliminar Carpeta</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Agregar AVL</a></li>
+            </ul>
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Lista Acciones
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="grafica_listacircular()">Mostrar Reporte Lista Circular</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Insertar Archivo en Carpeta</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Eliminar Carpeta</a></li>
+              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="agregarAVL()">Agregar AVL</a></li>
+            </ul>
+        </div>
+        <div>
+            <input type="text" id="folder" class="form-control" placeholder="Ingresar Carpeta" aria-label="Example text with button addon" aria-describedby="button-addon1">
+        </div>
+        <div class="dropdown">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Subir a AVL
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <input type="text" id="nombre" class="form-control" placeholder="Ingresar nombre" aria-label="Example text with button addon" aria-describedby="button-addon2">
+                <input type="text" id="carnet" class="form-control" placeholder="Ingresar carnet" aria-label="Example text with button addon" aria-describedby="button-addon2">
+                <input type="text" id="password" class="form-control" placeholder="Ingresar password" aria-label="Example text with button addon" aria-describedby="button-addon2">
+            </ul>
+        </div>
+        <!--
+        <input type="text" id="carnetp" class="form-control" placeholder="Ingresa tu carnet para dirigir tus carpetas a tu usuario" aria-label="Example text with button addon" aria-describedby="button-addon1">
+        -->
+    </div>
+    <div>
+        <div style="width: 22rem;">
+            <label class="form-label" for="customFile">Carga de archivos</label>
+            <input type="file" class="form-control bg-success text-white" id="input" autocompleted="">
+        </div>
+    </div>
+    <div class="images">
+        <img id="imagelistacircular" class="center">
+    </div>
+    <div class="images">
+        <img id="image" class="center">
+    </div>
+</div>
+<div>
+    <img id="imagematriz" class="center">
+    <iframe id="pdf" width=100% height=600></iframe>
+</div>
+
+
+
+<script src = "matrizdispersa.js"></script>
+<script src = "avlusuarios.js"></script>
+<script src="arboln.js"></script>
+<script src="listacircular.js"></script>
+</body>
+</html>
