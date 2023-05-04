@@ -83,7 +83,7 @@
             </div>
         </div>
         <div class="dropdown">
-            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
               Creación de Archivos
             </button>
             <input type="text" id="permiso" class="form-control" placeholder="arhivo.png-201700918-rw" aria-label="Example text with button addon" aria-describedby="button-addon2">
@@ -95,38 +95,28 @@
         </div>
         <!-- <button class="btn btn-outline-success" id="button-addon1" type="button" onclick="comprobarCarnet()">Comprobar Usuario</button> -->
         <div class="dropdown">
-            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton3" data-bs-toggle="dropdown" aria-expanded="false">
               Lista Acciones
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="grafica_listacircular()">Mostrar Reporte Lista Circular</a></li>
-              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Insertar Archivo en Carpeta</a></li>
-              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Eliminar Carpeta</a></li>
-              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Agregar AVL</a></li>
-            </ul>
-        </div>
-        <div class="dropdown">
-            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              Lista Acciones
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="grafica_listacircular()">Mostrar Reporte Lista Circular</a></li>
-              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Insertar Archivo en Carpeta</a></li>
-              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="insertFolder()">Eliminar Carpeta</a></li>
-              <li><a class="dropdown-item" id="button-addon2" href="#" onclick="agregarAVL()">Agregar AVL</a></li>
+              <li><a class="dropdown-item" id="button-addon3" href="#" onclick="grafica_listacircular()">Mostrar Reporte Lista Circular</a></li>
+              <li><a class="dropdown-item" id="button-addon3" href="#" onclick="insertFolder()">Insertar Archivo en Carpeta</a></li>
+              <li><a class="dropdown-item" id="button-addon3" href="#" onclick="insertFolder()">Eliminar Carpeta</a></li>
+              <li><a class="dropdown-item" id="button-addon3" href="#" onclick="guardar()">Guardar</a></li>
+              <li><a class="dropdown-item" id="button-addon3" href="#" onclick="insertFolder()">Agregar AVL</a></li>
             </ul>
         </div>
         <div>
             <input type="text" id="folder" class="form-control" placeholder="Ingresar Carpeta" aria-label="Example text with button addon" aria-describedby="button-addon1">
         </div>
         <div class="dropdown">
-            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              Subir a AVL
+            <button class="btn btn-outline-success dropdown-toggle" type="button" id="dropdownMenuButton4" data-bs-toggle="dropdown" aria-expanded="false">
+              Guardar datos
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <input type="text" id="nombre" class="form-control" placeholder="Ingresar nombre" aria-label="Example text with button addon" aria-describedby="button-addon2">
                 <input type="text" id="carnet" class="form-control" placeholder="Ingresar carnet" aria-label="Example text with button addon" aria-describedby="button-addon2">
-                <input type="text" id="password" class="form-control" placeholder="Ingresar password" aria-label="Example text with button addon" aria-describedby="button-addon2">
+                <input type="password" id="password" class="form-control" placeholder="Ingresar password" aria-label="Example text with button addon" aria-describedby="button-addon2">
+                <li><a class="dropdown-item" href="#" onclick="guardararbolnario()">Guardar</a></li>
             </ul>
         </div>
         <!--
@@ -151,6 +141,66 @@
     <iframe id="pdf" width=100% height=600></iframe>
 </div>
 
+
+
+<script>
+
+//RECORRIDO DE ARBOL AVL PARA INSERTAR ARBOL NARIO
+function recorridoArbol(raiz){
+    usuario = document.getElementById("carnet").value;
+    password = document.getElementById("password").value;
+    var arboln = localStorage.getItem('arbolnario');
+    var arboldata = JSON.parse(arboln);
+    console.log(arboln);
+
+    if(raiz !== null){
+        if(raiz.izquierdo !== null){
+            if (usuario == raiz.izquierdo.valor && password == raiz.izquierdo.password) {
+                raiz.izquierdo.arbolnario = arboldata;
+                localStorage.setItem('arbolavl',JSON.stringify(raiz));
+                alert("Se guardaron tus carpetas!")
+                return raiz
+            } 
+        }
+        if(raiz.derecho !== null){
+            if (usuario == raiz.derecho.valor && password == raiz.derecho.password) {
+                raiz.derecho.arbolnario = arboldata;
+                localStorage.setItem('arbolavl',JSON.stringify(raiz));
+                alert("Se guardaron tus carpetas!")
+                return raiz
+            } 
+            
+        }
+        if (usuario == raiz.valor && password == raiz.password) {
+            raiz.arbolnario = arboldata;
+            localStorage.setItem('arbolavl',JSON.stringify(raiz));
+            alert("Se guardaron tus carpetas!")
+            return raiz
+        } 
+        alert("Usuario/Contraseña incorrectos")
+
+    } else {
+        alert("No hay estudiantes registados")
+    }
+    
+}
+
+    function guardararbolnario() {
+    var usuario, password
+    usuario = document.getElementById("carnet").value;
+    password = document.getElementById("password").value;
+
+    var arbolavl2 = localStorage.getItem('arbol');
+    var data2 = JSON.parse(arbolavl2);
+    console.log(arbolavl2);
+   
+    if (data2.raiz != null) {
+        recorridoArbol(data2.raiz)
+    } else {
+        alert("El usuario no se encuentra en el sistema")
+    }
+    }
+</script>
 
 
 <script src = "matrizdispersa.js"></script>

@@ -1,5 +1,4 @@
-
-///////////////////// FUNCIONES PARA ARBOL N-ARIO
+//////////////////// FUNCIONES PARA ARBOL N-ARIO
 
 class nodoArbolN{
     constructor(valor, id){
@@ -416,8 +415,6 @@ function agregarVarios(){
     let carpeta = document.getElementById("carpeta").value
     try{
         arbolnario.insertarValor(ruta,carpeta)
-        localStorage.setItem('arbolnario',JSON.stringify(arbolnario))
-        console.log(localStorage.getItem('arbolnario'))
         list.insertarLista("Se creó la carpeta: " + carpeta + " Fecha:" + date +  " Hora:" + time)
         localStorage.setItem('listacircular',JSON.stringify(list))
         console.log(localStorage.getItem('listacircular'))
@@ -443,6 +440,10 @@ function mostraCarpetas(){
     arbolnario.mostrarCarpetasActuales(ruta)
 }
 
+function guardar(){
+    localStorage.setItem('arbolnario',JSON.stringify(arbolnario))
+    console.log(localStorage.getItem('arbolnario'))
+}
 
 function insertFolder(){
     let carpeta = document.getElementById("folder").value
@@ -456,12 +457,10 @@ function deleteFolder(){
     console.log(arbolnario)
 }
 
+
+
+
 /////////////////////////
-
-
-
-
-
 
 
 /////////

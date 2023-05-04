@@ -11,9 +11,9 @@ class nodoArbol {
         this.carpetar = carpetar; //carpeta raiz = carpeta raiz de estudiante
         this.altura = 1;
         this.factor_equilibrio = 0;
-        this.arbol = arbolnario;
+        this.arbolnario = arbolnario;
         this.listacircular = listacircular;
-        //this.arboln = new ArbolNArio()
+        //this.arboln = arbolnario
         //this.listac = new ListaCircular()
     }
 
@@ -108,8 +108,8 @@ class ArbolAVL {
     }
 
 
-    insertaValor(valor,nombre,passsword,carpetar,arbolnario,list){
-        const nuevoNodo = new nodoArbol(valor,nombre,passsword,carpetar,arbolnario,list);
+    insertaValor(valor,nombre,passsword,carpetar,arbolnario,listacircular){
+        const nuevoNodo = new nodoArbol(valor,nombre,passsword,carpetar,arbolnario,listacircular);
         this.raiz = this.insertarValorHijo(nuevoNodo,this.raiz);
     }
 
@@ -369,6 +369,14 @@ function llenarAVL(){
 
 
 
+function agregarAVL(){
+    var carnet = document.getElementById("carnet").value;
+    var nombre = document.getElementById("nombre").value;
+    var password =  document.getElementById("password").value;
+
+    AVL.insertaValor(carnet,nombre,password,'/',arbolnario,'{}')
+    console.log(AVL)
+}
 
 
 //RECORRIDO DE ARBOL AVL PARA FUNCION LOGIN DE USUARIOS
@@ -379,23 +387,37 @@ function recorridoAVL(raiz){
     if(raiz !== null){
         if(raiz.izquierdo !== null){
             if (usuario == raiz.izquierdo.valor && password == raiz.izquierdo.password) {
-                alert("Se encontró al estudiante en el sistema!")
+                alert("Se encontró al estudiante " + raiz.izquierdo.nombre + " en el sistema!")
                 window.location = "userpage.html"
                 return raiz
+            } else if (usuario == raiz.izquierdo.izquierdo.valor && password == raiz.izquierdo.izquierdo.password) {
+                alert("Se encontró al estudiante " + raiz.izquierdo.izquierdo.nombre + " en el sistema!")
+                window.location = "userpage.html"
+                return raiz                
+            } else if (usuario == raiz.izquierdo.derecho.valor && password == raiz.izquierdo.derecho.password) {
+                alert("Se encontró al estudiante " + raiz.izquierdo.derecho.nombre + " en el sistema!")
+                window.location = "userpage.html"
+                return raiz                
             }
             
         }
         if(raiz.derecho !== null){
             if (usuario == raiz.derecho.valor && password == raiz.derecho.password) {
-                alert("Se encontró al estudiante en el sistema!")
+                alert("Se encontró al estudiante " + raiz.derecho.nombre + " en el sistema!")
                 window.location = "userpage.html"
                 return raiz
-            } 
-            
-
+            } else if (usuario == raiz.derecho.derecho.valor && password == raiz.derecho.derecho.password) {
+                alert("Se encontró al estudiante " + raiz.derecho.derecho.nombre + " en el sistema!")
+                window.location = "userpage.html"
+                return raiz                
+            } else if (usuario == raiz.derecho.izquierdo.valor && password == raiz.derecho.izquierdo.password) {
+                alert("Se encontró al estudiante " + raiz.derecho.izquierdo.nombre + " en el sistema!")
+                window.location = "userpage.html"
+                return raiz                
+            }     
         }
         if (usuario == raiz.valor && password == raiz.password) {
-            alert("Se encontró al estudiante en el sistema!")
+            alert("Se encontró al estudiante" + raiz.nombre + "en el sistema!")
             window.location = "userpage.html";
             return raiz
         }
@@ -407,6 +429,62 @@ function recorridoAVL(raiz){
     
 }
 
+//RECORRIDO DE ARBOL AVL PARA INSERTAR ARBOL NARIO
+function recorridoArbol(raiz){
+    usuario = document.getElementById("carnet").value;
+    password = document.getElementById("password").value;
+    var arboln = localStorage.getItem('arbolnario');
+    var arboldata = JSON.parse(arboln);
+    console.log(arboln);
+
+    if(raiz !== null){
+        if(raiz.izquierdo !== null){
+            if (usuario == raiz.izquierdo.valor && password == raiz.izquierdo.password) {
+                raiz.izquierdo.arbolnario = arboldata;
+                localStorage.setItem('arbolavl',JSON.stringify(raiz));
+                alert("Se guardaron tus carpetas!")
+                return raiz
+            } 
+        }
+        if(raiz.derecho !== null){
+            if (usuario == raiz.derecho.valor && password == raiz.derecho.password) {
+                raiz.derecho.arbolnario = arboldata;
+                localStorage.setItem('arbolavl',JSON.stringify(raiz));
+                alert("Se guardaron tus carpetas!")
+                return raiz
+            } 
+            
+        }
+        if (usuario == raiz.valor && password == raiz.password) {
+            raiz.arbolnario = arboldata;
+            localStorage.setItem('arbolavl',JSON.stringify(raiz));
+            alert("Se guardaron tus carpetas!")
+            return raiz
+        } 
+        alert("Usuario/Contraseña incorrectos")
+
+    } else {
+        alert("No hay estudiantes registados")
+    }
+    
+}
+
+
+function guardararbolnario(){
+    var usuario, password
+    usuario = document.getElementById("carnet").value;
+    password = document.getElementById("password").value;
+
+    var arbolavl2 = localStorage.getItem('arbol');
+    var data2 = JSON.parse(arbolavl2);
+    console.log(arbolavl2);
+   
+    if (data2.raiz != null) {
+        recorridoArbol(data2.raiz)
+    } else {
+        alert("El usuario no se encuentra en el sistema")
+    }
+}
 
 
 function generarImagenUserLog(raiz){
@@ -453,18 +531,6 @@ function login(){
     } else {
         alert("El usuario no se encuentra en el sistema")
     }
-}
-
-
-
-function agregarAVL(){
-    var carnet = document.getElementById("carnet").value;
-    var nombre = document.getElementById("nombre").value;
-    var password =  document.getElementById("password").value;
-    binaryTreeAVL.insertaValor(carnet,nombre,password,'/',arbolnario,list)
-    console.log(arbolnario)
-    console.log(list)
-    console.log(binaryTreeAVL)
 }
 
 

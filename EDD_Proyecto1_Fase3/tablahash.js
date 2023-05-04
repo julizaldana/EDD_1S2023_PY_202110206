@@ -1,10 +1,11 @@
 //CLASE Y FUNCIONES PARA TABLA HASH - Para almacenar estudiantes/usuarios
 
 class nodoHash{
-    constructor(carnet, usuario, password){
+    constructor(carnet, usuario, password, arboln){
         this.carnet = carnet
         this.usuario = usuario
         this.password = password
+        this.arboln = arboln
     }
 }
 
@@ -15,9 +16,9 @@ class TablaHash{
         this.utilizacion = 0
     }
 
-    insertar(carnet, usuario, password){
+    insertar(carnet, usuario, password, arboln){
         let indice = this.calculoIndice(carnet)
-        const nuevoNodo = new nodoHash(carnet, usuario, password)
+        const nuevoNodo = new nodoHash(carnet, usuario, password, arboln)
         if(indice < this.capacidad){
             try{
                 if(this.tabla[indice] == null){
@@ -94,28 +95,31 @@ class TablaHash{
         return nueva_posicion
     }
 
-    async busquedaLogin(carnet){
+    busquedaLogin(carnet){
         var user, contrasena
         user = document.getElementById("usuario").value;
         contrasena = document.getElementById("contrasena").value;
 
+        var tablahash = localStorage.getItem('tablahashusers');
+        var datahash = JSON.parse(tablahash);
+
         let indice = this.calculoIndice(carnet)
-        if(indice < this.capacidad){
+        if(indice < datahash.capacidad){
             try{
-                if(this.tabla[indice] == null){
-                    alert("Bienvenido " + this.tabla[indice].usuario)
+                if(datahash.tabla[indice] == null){
+                    alert("Bienvenido " + datahash.tabla[indice].usuario)
                     window.location = "userpagef3.html"
-                }else if(this.tabla[indice] != null && this.tabla[indice].carnet == user && await desencriptacion(this.tabla[indice].password) == contrasena){
-                    alert("Bienvenido " + this.tabla[indice].usuario)
+                }else if(datahash.tabla[indice] != null && datahash.tabla[indice].carnet == carnet){
+                    alert("Bienvenido " + datahash.tabla[indice].usuario)
                     window.location = "userpagef3.html"
                 }else{
                     let contador = 1
                     indice = this.RecalculoIndice(carnet,contador)
-                    while(this.tabla[indice] != null){
+                    while(datahashtabla[indice] != null){
                         contador++
                         indice = this.RecalculoIndice(carnet, contador)
-                        if(this.tabla[indice].carnet == user && await desencriptacion(this.tabla[indice].password) == contrasena){
-                            alert("Bienvenido " + this.tabla[indice].usuario)
+                        if(datahash.tabla[indice].carnet == carnet){
+                            alert("Bienvenido " + datahash.tabla[indice].usuario)
                             window.location = "userpagef3.html"
                             return
                         }
@@ -254,7 +258,7 @@ async function onReaderLoad(event){
         tablaHash.insertar(obj.alumnos[i].carnet, obj.alumnos[i].nombre, await encriptacion(obj.alumnos[i].password))
     }
     console.log(tablaHash.tabla)
-    localStorage.setItem('tablahashusers',JSON.stringify(tablaHash.tabla))
+    localStorage.setItem('tablahashusers',JSON.stringify(tablaHash))
     console.log(localStorage.getItem('tablahashusers'))
     tablaHash.genera_tabla()
 }
@@ -264,14 +268,33 @@ function loginHash(){
     var carnet = document.getElementById("usuario").value;
     var contraseña = document.getElementById("contrasena").value;
 
-    var tablahash = localStorage.getItem('tablahashusers');
-    var data = JSON.parse(tablahash);
-
     if (carnet == "Admin" && contraseña == "Admin") {
         window.location = "dashboardadminf3.html";
-    } else if (data.raiz != null) {
-        tablaHash.busquedaLogin(data.tabla.carnet);
     } else {
-        alert("El usuario no se encuentra en el sistema")
-    }
+        tablaHash.busquedaLogin(carnet);
+    } 
+}
+
+
+function busqueda(){
+    let carnet = document.getElementById("valor").value;
+    tablaHash.busquedaLogin(carnet);
+
+}
+
+
+function avltoHashtable() {
+    var arbolavl = localStorage.getItem('arbolavl')
+    const data = {arbolavl}
+
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+          const element = data[key];
+          if (typeof element === 'object' && element !== null) {
+            console.log(`valor: ${element.valor}, nombre: ${element.nombre}, password: ${element.password}, arbolnario: ${JSON.stringify(element.arbolnario)}`);
+            tablaHash.insertar(element.valor,element.nombre,element.password,JSON.stringify(element.arbolnario))
+          }
+        }
+      }
+
 }

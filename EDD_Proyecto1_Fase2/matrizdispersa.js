@@ -251,6 +251,7 @@ class Matriz{
         }else{
             cadena = "No hay elementos en la matriz"
         }
+        console.log(cadena)
         return cadena;
     }
 }
@@ -265,6 +266,7 @@ function reporteMatriz(){
 
 function cargarArchivo(){
     matriz.insertarArchivo(nombreArchivo,1)
+    arbolnario.insertarCarpeta("/")
     list.insertarLista("Se creó el achivo: " + nombreArchivo + " Fecha:" + date + " Hora:" + time)
     console.log(list)
     console.log(matriz)
