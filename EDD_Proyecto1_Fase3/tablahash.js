@@ -1,11 +1,11 @@
 //CLASE Y FUNCIONES PARA TABLA HASH - Para almacenar estudiantes/usuarios
 
 class nodoHash{
-    constructor(carnet, usuario, password, arboln){
+    constructor(carnet, usuario, password, arbolnario){
         this.carnet = carnet
         this.usuario = usuario
         this.password = password
-        this.arboln = arboln
+        this.arbolnario = arbolnario
     }
 }
 
@@ -16,9 +16,9 @@ class TablaHash{
         this.utilizacion = 0
     }
 
-    insertar(carnet, usuario, password, arboln){
+    insertar(carnet, usuario, password, arbolnario = {}){
         let indice = this.calculoIndice(carnet)
-        const nuevoNodo = new nodoHash(carnet, usuario, password, arboln)
+        const nuevoNodo = new nodoHash(carnet, usuario, password, arbolnario)
         if(indice < this.capacidad){
             try{
                 if(this.tabla[indice] == null){
@@ -171,10 +171,11 @@ class TablaHash{
         for(var i = 0; i < this.capacidad; i++){
             if(this.tabla[i] != null){
                 var hilera = document.createElement("tr");
-                var arreglo = new Array(3)
+                var arreglo = new Array(4)
                 arreglo[0] = this.tabla[i].carnet
                 arreglo[1] = this.tabla[i].usuario
                 arreglo[2] = this.tabla[i].password
+                arreglo[3] = this.tabla[i].arboln
                 for(var j = 0; j < 3; j++){
                     var celda = document.createElement("td");
                     var textoCelda = document.createTextNode(arreglo[j]);
@@ -296,7 +297,12 @@ function loginHash(){
     if (carnet == "Admin" && contraseña == "Admin") {
         window.location = "dashboardadminf3.html";
     } else {
-        tablaHash.busquedaLogin(carnet);
+        try {
+            verificarLoginHash()
+        }
+        catch(err){
+            console.log("No se encuentra al usuario")
+        }
     } 
 }
 
@@ -326,43 +332,52 @@ async function loginHashV2() {
 }
 
 
-async function loginHashV3() {
+//LOGIN QUE REVISAMOS
+async function verificarLoginHash() {
     var carne = document.getElementById("usuario").value;
     var contraseña = document.getElementById("contrasena").value;
 
-    var hasht = localStorage.getItem('tablahashusers');
-    const data = JSON.parse(hasht)
-    console.log(hasht)
+    var hashtabla = localStorage.getItem('tablahashusers');
+    const data = JSON.parse(hashtabla)
+    console.log(hashtabla)
 
         for (let i = 0; i < data.length; i++) {
             const obj = data[i];
             if (obj) { 
-                if (obj.carnet == carne && await desencriptacion(obj.password) == await encriptacion(contraseña)) {
-                    alert("El usuario ha sido encontrado en el sistema!"),
+                if (obj.carnet == carne &&  obj.password == await tablaHash.sha256(contraseña)) {
+                    alert("El usuario " + " " + obj.usuario  + " " + " ha sido encontrado en el sistema!"),
                     window.location = "userpagef3.html";  
                 }
-            } else {
-                alert("Hubo un error al encontrar al usuario")
-            }
+            } 
         }
-
 }
 
 
-
-//FUNCION PARA CARGAR DE AVL A TABLA HASH.
-async function avltoHashtable() {
-    var arbolavl = JSON.parse(localStorage.getItem('arbol'));
-
-    for (const key in arbolavl) {
-        if (arbolavl.hasOwnProperty(key)) {
-          const element = arbolavl[key];
-          if (typeof element === 'object' && element !== null) {
-            console.log(`valor: ${element.valor}, nombre: ${element.nombre}, password: ${element.password}, arbolnario: ${JSON.stringify(element.arbolnario)}`);
-            tablaHash.insertar(element.valor,element.nombre,await desencriptacion(element.password),JSON.stringify(element.arbolnario))
-          }
+//FUNCION PARA CARGAR DE AVL A TABLA HASH CON RECORRIDO INORDEN.
+async function avltoHashtable(nodo) {
+    if (nodo != null) {
+        if (nodo.izquierdo != null) {
+            avltoHashtable(nodo.izquierdo);
+        }
+        console.log(`valor: ${nodo.valor}, nombre: ${nodo.nombre}, password: ${nodo.password}, arbolnario: ${ JSON.stringify(nodo.arbolnario)}`);
+        AVLinfotoHASH(nodo)
+        if (nodo.derecho != null) {
+            avltoHashtable(nodo.derecho);
         }
     }
-    tablaHash.genera_tabla()
+    console.log(tablaHash.tabla) 
+}
 
+async function AVLinfotoHASH(nodo){
+    tablaHash.insertar(nodo.valor, nodo.nombre, await tablaHash.sha256(nodo.password), JSON.stringify(nodo.arbolnario));
+}
+
+function cargarAVLtoHash(){
+    var arbolavl = JSON.parse(localStorage.getItem('arbol'));
+    avltoHashtable(arbolavl.raiz);
+}
+
+function motrarTablaHash(){
+    tablaHash.genera_tabla()
+    localStorage.setItem('tablahashusers',JSON.stringify(tablaHash.tabla))
 }
