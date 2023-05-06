@@ -95,34 +95,38 @@ class TablaHash{
         return nueva_posicion
     }
 
-    busquedaLogin(carnet){
+    busquedaLogin(carnet, pass_log){
         var user, contrasena
         user = document.getElementById("usuario").value;
         contrasena = document.getElementById("contrasena").value;
 
-        var tablahash = localStorage.getItem('tablahashusers');
-        var datahash = JSON.parse(tablahash);
-
         let indice = this.calculoIndice(carnet)
-        if(indice < datahash.capacidad){
+        if(indice < this.capacidad){
             try{
-                if(datahash.tabla[indice] == null){
-                    alert("Bienvenido " + datahash.tabla[indice].usuario)
-                    window.location = "userpagef3.html"
-                }else if(datahash.tabla[indice] != null && datahash.tabla[indice].carnet == carnet){
-                    alert("Bienvenido " + datahash.tabla[indice].usuario)
-                    window.location = "userpagef3.html"
+                if(this.tabla[indice] == null){
+                    alert("No se encontró al alumno")
+                }else if(this.tabla[indice] != null && this.tabla[indice].carnet == carnet){
+                    if (this.tabla[indice].password = pass_log) {
+                        alert("Bienvenido " + this.tabla[indice].usuario)
+                        window.location = "userpagef3.html"
+                    }
+                    alert("Bienvenido " + this.tabla[indice].usuario)
+                    
                 }else{
                     let contador = 1
                     indice = this.RecalculoIndice(carnet,contador)
-                    while(datahashtabla[indice] != null){
-                        contador++
-                        indice = this.RecalculoIndice(carnet, contador)
-                        if(datahash.tabla[indice].carnet == carnet){
-                            alert("Bienvenido " + datahash.tabla[indice].usuario)
-                            window.location = "userpagef3.html"
+                    while(this.tabla[indice] != null){
+                        if(this.tabla[indice].carnet == carnet){
+                            if(this.tabla[indice].password == pass_log) {
+                                alert("Bienvenido " + this.tabla[indice].usuario)
+                                window.location = "userpagef3.html"
+                            } else {
+                                alert("Contraseña es incorrecta")
+                            }
                             return
-                        }
+                        }  
+                        contador++
+                        indice = this.RecalculoIndice(carnet,contador)         
                     }
                 }
             }catch(err){
@@ -202,6 +206,21 @@ class TablaHash{
         return true;
     }
 
+    async sha256(mensaje) {
+        let cadenaFinal
+        const enconder = new TextEncoder();
+        const mensajeCodificado = enconder.encode(mensaje)
+        await crypto.subtle.digest("SHA-256", mensajeCodificado)
+        .then(result => { 
+            const hashArray = Array.from(new Uint8Array(result))
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('')
+            cadenaFinal = hashHex
+        })
+        .catch(error => console.log(error))
+        return cadenaFinal;
+    }
+    
+
 }
 
 const tablaHash = new TablaHash()
@@ -243,6 +262,12 @@ async function desencriptacion(mensaje){
     return mensajeOriginal
 }
 
+
+
+
+
+
+
 const inputElement = document.getElementById("input");
 inputElement.addEventListener("change", onChange, false);
 function onChange(event) {
@@ -255,10 +280,10 @@ function onChange(event) {
 async function onReaderLoad(event){
     var obj = JSON.parse(event.target.result);
     for(var i = 0; i < obj.alumnos.length; i++){
-        tablaHash.insertar(obj.alumnos[i].carnet, obj.alumnos[i].nombre, await encriptacion(obj.alumnos[i].password))
+        tablaHash.insertar(obj.alumnos[i].carnet, obj.alumnos[i].nombre, await tablaHash.sha256(obj.alumnos[i].password))
     }
     console.log(tablaHash.tabla)
-    localStorage.setItem('tablahashusers',JSON.stringify(tablaHash))
+    localStorage.setItem('tablahashusers',JSON.stringify(tablaHash.tabla))
     console.log(localStorage.getItem('tablahashusers'))
     tablaHash.genera_tabla()
 }
@@ -276,25 +301,68 @@ function loginHash(){
 }
 
 
-function busqueda(){
+async function busqueda(){
     let carnet = document.getElementById("valor").value;
-    tablaHash.busquedaLogin(carnet);
+    let passw = document.getElementById("passw").value;
+    let pass_log = await tablaHash.sha256(passw)
+    tablaHash.busquedaLogin(carnet, pass_log);
 
 }
 
 
-function avltoHashtable() {
-    var arbolavl = localStorage.getItem('arbolavl')
-    const data = {arbolavl}
+async function loginHashV2() {
+    var hasht = localStorage.getItem('tablahashusers');
+    const data = JSON.parse(hasht)
+    console.log(hasht)
 
-    for (const key in data) {
-        if (data.hasOwnProperty(key)) {
-          const element = data[key];
-          if (typeof element === 'object' && element !== null) {
-            console.log(`valor: ${element.valor}, nombre: ${element.nombre}, password: ${element.password}, arbolnario: ${JSON.stringify(element.arbolnario)}`);
-            tablaHash.insertar(element.valor,element.nombre,element.password,JSON.stringify(element.arbolnario))
-          }
+    for (let i = 0; i < data.length; i++) {
+        const obj = data[i];
+        if (obj) { // check if the element is not null
+          var carnet = obj.carnet;
+          var password = obj.password;
+          console.log(carnet, password);
         }
       }
+}
+
+
+async function loginHashV3() {
+    var carne = document.getElementById("usuario").value;
+    var contraseña = document.getElementById("contrasena").value;
+
+    var hasht = localStorage.getItem('tablahashusers');
+    const data = JSON.parse(hasht)
+    console.log(hasht)
+
+        for (let i = 0; i < data.length; i++) {
+            const obj = data[i];
+            if (obj) { 
+                if (obj.carnet == carne && await desencriptacion(obj.password) == await encriptacion(contraseña)) {
+                    alert("El usuario ha sido encontrado en el sistema!"),
+                    window.location = "userpagef3.html";  
+                }
+            } else {
+                alert("Hubo un error al encontrar al usuario")
+            }
+        }
+
+}
+
+
+
+//FUNCION PARA CARGAR DE AVL A TABLA HASH.
+async function avltoHashtable() {
+    var arbolavl = JSON.parse(localStorage.getItem('arbol'));
+
+    for (const key in arbolavl) {
+        if (arbolavl.hasOwnProperty(key)) {
+          const element = arbolavl[key];
+          if (typeof element === 'object' && element !== null) {
+            console.log(`valor: ${element.valor}, nombre: ${element.nombre}, password: ${element.password}, arbolnario: ${JSON.stringify(element.arbolnario)}`);
+            tablaHash.insertar(element.valor,element.nombre,await desencriptacion(element.password),JSON.stringify(element.arbolnario))
+          }
+        }
+    }
+    tablaHash.genera_tabla()
 
 }

@@ -380,93 +380,50 @@ function agregarAVL(){
 
 
 //RECORRIDO DE ARBOL AVL PARA FUNCION LOGIN DE USUARIOS
-function recorridoAVL(raiz){
-    usuario = document.getElementById("usuario").value;
-    password = document.getElementById("contrasena").value;
-
-    if(raiz !== null){
-        if(raiz.izquierdo !== null){
-            if (usuario == raiz.izquierdo.valor && password == raiz.izquierdo.password) {
-                alert("Se encontró al estudiante " + raiz.izquierdo.nombre + " en el sistema!")
-                window.location = "userpage.html"
-                return raiz
-            } else if (usuario == raiz.izquierdo.izquierdo.valor && password == raiz.izquierdo.izquierdo.password) {
-                alert("Se encontró al estudiante " + raiz.izquierdo.izquierdo.nombre + " en el sistema!")
-                window.location = "userpage.html"
-                return raiz                
-            } else if (usuario == raiz.izquierdo.derecho.valor && password == raiz.izquierdo.derecho.password) {
-                alert("Se encontró al estudiante " + raiz.izquierdo.derecho.nombre + " en el sistema!")
-                window.location = "userpage.html"
-                return raiz                
-            }
-            
-        }
-        if(raiz.derecho !== null){
-            if (usuario == raiz.derecho.valor && password == raiz.derecho.password) {
-                alert("Se encontró al estudiante " + raiz.derecho.nombre + " en el sistema!")
-                window.location = "userpage.html"
-                return raiz
-            } else if (usuario == raiz.derecho.derecho.valor && password == raiz.derecho.derecho.password) {
-                alert("Se encontró al estudiante " + raiz.derecho.derecho.nombre + " en el sistema!")
-                window.location = "userpage.html"
-                return raiz                
-            } else if (usuario == raiz.derecho.izquierdo.valor && password == raiz.derecho.izquierdo.password) {
-                alert("Se encontró al estudiante " + raiz.derecho.izquierdo.nombre + " en el sistema!")
-                window.location = "userpage.html"
-                return raiz                
-            }     
-        }
-        if (usuario == raiz.valor && password == raiz.password) {
-            alert("Se encontró al estudiante" + raiz.nombre + "en el sistema!")
-            window.location = "userpage.html";
-            return raiz
-        }
-        alert("Usuario/Contraseña incorrectos")
-
-    } else {
-        alert("No hay estudiantes registados")
+function recorridoAVL(raiz, usuario, password) {
+    if (raiz == null) {
+        alert("El usuario o contraseña es incorrecto");
+        return;
     }
-    
+
+    if (usuario == raiz.valor && password == raiz.password) {
+        alert("Se encontró al estudiante " + raiz.nombre + " en el sistema!");
+        window.location = "userpage.html";
+        return raiz;
+    }
+
+    if (usuario < raiz.valor) {
+        return recorridoAVL(raiz.izquierdo, usuario, password);
+    } else {
+        return recorridoAVL(raiz.derecho, usuario, password);
+    }
+
 }
 
+
 //RECORRIDO DE ARBOL AVL PARA INSERTAR ARBOL NARIO
-function recorridoArbol(raiz){
-    usuario = document.getElementById("carnet").value;
-    password = document.getElementById("password").value;
-    var arboln = localStorage.getItem('arbolnario');
-    var arboldata = JSON.parse(arboln);
-    console.log(arboln);
+function recorridoArbol(raiz, usuario, password) {
+    var arboln = JSON.parse(localStorage.getItem('arbolnario'));
+    var arbol = JSON.parse(localStorage.getItem('arbol'))
 
-    if(raiz !== null){
-        if(raiz.izquierdo !== null){
-            if (usuario == raiz.izquierdo.valor && password == raiz.izquierdo.password) {
-                raiz.izquierdo.arbolnario = arboldata;
-                localStorage.setItem('arbolavl',JSON.stringify(raiz));
-                alert("Se guardaron tus carpetas!")
-                return raiz
-            } 
-        }
-        if(raiz.derecho !== null){
-            if (usuario == raiz.derecho.valor && password == raiz.derecho.password) {
-                raiz.derecho.arbolnario = arboldata;
-                localStorage.setItem('arbolavl',JSON.stringify(raiz));
-                alert("Se guardaron tus carpetas!")
-                return raiz
-            } 
-            
-        }
-        if (usuario == raiz.valor && password == raiz.password) {
-            raiz.arbolnario = arboldata;
-            localStorage.setItem('arbolavl',JSON.stringify(raiz));
-            alert("Se guardaron tus carpetas!")
-            return raiz
-        } 
-        alert("Usuario/Contraseña incorrectos")
-
-    } else {
-        alert("No hay estudiantes registados")
+    if (raiz == null) {
+        alert("El usuario o contraseña es incorrecto");
+        return;
     }
-    
+
+    if (usuario == raiz.valor && password == raiz.password) {
+        alert("Se guardan las carpetas a  " + raiz.nombre);
+        arbol.raiz.arbolnario = arboln;
+        localStorage.setItem('arbol',JSON.stringify(arbol));
+        return raiz;
+    }
+
+    if (usuario < raiz.valor) {
+        return recorridoAVL(raiz.izquierdo, usuario, password);
+    } else {
+        return recorridoAVL(raiz.derecho, usuario, password);
+    }
+
 }
 
 
@@ -479,11 +436,11 @@ function guardararbolnario(){
     var data2 = JSON.parse(arbolavl2);
     console.log(arbolavl2);
    
-    if (data2.raiz != null) {
-        recorridoArbol(data2.raiz)
-    } else {
-        alert("El usuario no se encuentra en el sistema")
-    }
+
+    var nodo = recorridoArbol(data2.raiz, usuario, password);
+    if (nodo) {
+        return nodo;
+    } 
 }
 
 
@@ -515,22 +472,23 @@ function mostrarLogUser(){
 
 
 //LOGIN PARA USUARIOS DE ARBOL AVL
-function login(){
-    var usuario, password
-    usuario = document.getElementById("usuario").value;
-    password = document.getElementById("contrasena").value;
+function login() {
+    var usuario = document.getElementById("usuario").value;
+    var password = document.getElementById("contrasena").value;
+
+    if (usuario == "Admin" && password == "Admin") { 
+        window.location = "dashboardadmin.html";
+        return;
+    }
 
     var arbolavl = localStorage.getItem('arbol');
     var data = JSON.parse(arbolavl);
     console.log(arbolavl);
-   
-    if (usuario == "Admin" && password == "Admin") { 
-        window.location = "dashboardadmin.html";
-    } else if (data.raiz != null) {
-        recorridoAVL(data.raiz)
-    } else {
-        alert("El usuario no se encuentra en el sistema")
-    }
+
+    var nodo = recorridoAVL(data.raiz, usuario, password);
+    if (nodo) {
+        return nodo;
+    } 
 }
 
 

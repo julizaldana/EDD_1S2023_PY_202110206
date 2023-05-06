@@ -149,33 +149,53 @@
 function recorridoArbol(raiz){
     usuario = document.getElementById("carnet").value;
     password = document.getElementById("password").value;
-    var arboln = localStorage.getItem('arbolnario');
-    var arboldata = JSON.parse(arboln);
-    console.log(arboln);
+    var arboln = JSON.parse(localStorage.getItem('arbolnario'));
+    var arbol = JSON.parse(localStorage.getItem('arbol'))
+
 
     if(raiz !== null){
         if(raiz.izquierdo !== null){
             if (usuario == raiz.izquierdo.valor && password == raiz.izquierdo.password) {
-                raiz.izquierdo.arbolnario = arboldata;
-                localStorage.setItem('arbolavl',JSON.stringify(raiz));
-                alert("Se guardaron tus carpetas!")
-                return raiz
-            } 
+                arbol.raiz.izquierdo.arbolnario = arboln;
+                localStorage.setItem('arbol',JSON.stringify(arbol));
+                alert("Se guardaron tus carpetas!");
+                return raiz;
+            } else if (usuario == raiz.izquierdo.izquierdo.valor && password == raiz.izquierdo.izquierdo.password) {
+                arbol.raiz.izquierdo.izquierdo.arbolnario = arboln;
+                localStorage.setItem('arbol',JSON.stringify(arbol));
+                alert("Se guardaron tus carpetas!");
+                return raiz;
+            } else if (usuario == raiz.izquierdo.derecho.valor && password == raiz.izquierdo.derecho.password) {
+                arbol.raiz.izquierdo.derecho.arbolnario = arboln;
+                localStorage.setItem('arbol',JSON.stringify(arbol));
+                alert("Se guardaron tus carpetas!");
+                return raiz;
+            }
         }
         if(raiz.derecho !== null){
             if (usuario == raiz.derecho.valor && password == raiz.derecho.password) {
-                raiz.derecho.arbolnario = arboldata;
-                localStorage.setItem('arbolavl',JSON.stringify(raiz));
-                alert("Se guardaron tus carpetas!")
-                return raiz
-            } 
+                arbol.raiz.derecho.arbolnario = arboln;
+                localStorage.setItem('arbol',JSON.stringify(arbol));
+                alert("Se guardaron tus carpetas!");
+                return raiz;
+            } else if (usuario == raiz.derecho.izquierdo.valor && password == raiz.derecho.izquierdo.password) {
+                arbol.raiz.derecho.izquierdo.arbolnario = arboln;
+                localStorage.setItem('arbol',JSON.stringify(arbol));
+                alert("Se guardaron tus carpetas!");
+                return raiz;
+            } else if (usuario == raiz.derecho.derecho.valor && password == raiz.derecho.derecho.password) {
+                arbol.raiz.derecho.derecho.arbolnario = arboln;
+                localStorage.setItem('arbol',JSON.stringify(arbol));
+                alert("Se guardaron tus carpetas!");
+                return raiz;
+            }
             
         }
         if (usuario == raiz.valor && password == raiz.password) {
-            raiz.arbolnario = arboldata;
-            localStorage.setItem('arbolavl',JSON.stringify(raiz));
-            alert("Se guardaron tus carpetas!")
-            return raiz
+            arbol.raiz.arbolnario = arboln;
+            localStorage.setItem('arbol',JSON.stringify(arbol));
+            alert("Se guardaron tus carpetas!");
+            return raiz;
         } 
         alert("Usuario/Contraseña incorrectos")
 
@@ -199,7 +219,7 @@ function recorridoArbol(raiz){
     } else {
         alert("El usuario no se encuentra en el sistema")
     }
-    }
+}
 </script>
 
 
