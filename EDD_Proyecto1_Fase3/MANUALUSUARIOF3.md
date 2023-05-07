@@ -9,39 +9,45 @@
 ### Carnet: 202110206
 -----
 
-**Resumen**
+**Alcance Aplicación**
 
-En el presente proyecto, correspondiente a la fase 2. Se da a conocer una solución para la elaboración de un sistema de almacenamiento de archivos. 
-Este es llamado EDD GoDrive. En esta fase, se cumple con las funciones respectivas a un dashboard para un administrador, 
-al igual que se cumple con algunas funciones de creación de carpetas y archivos para cada usuario que este aceptado en el sistema de EDD GoDrive. 
-Todo elaborado con el lenguaje de programación JavaScript y para la elaboración de la interfaz gráfica con HTML y CSS. 
+El alcance del proyecto comprende de una aplicación, para poder visualizar carpetas, archivos y poder crear mensajes entre usuarios del sistema de EDD Go Drive. 
 
-**Explicación del funcionamiento del programa**
+**Navegabilidad Aplicación**
 
-El programa consiste básicamente, en un aplicación web, lanzada con GitHub Pages, trabajada con HTML y para la elaboración de estructuras y la lógica del programa con JavaScript.
-El programa funciona y consiste en la creación de carpetas, archivos, otorgar permisos de lectura a los archivos entre otras.
+1. INICIAR SESIÓN - FASE 3
 
-**Explicación Archivos**
-
-Se trabajaron cuatro estructuras:
-
-1. Arbol AVL: Para almacenamiento de usuarios 
-2. Arbol N-ario: Para creación de carpetas de usuarios
-3. Matriz Dispersa: Para creación de archivos y manejo de permisos de los mismos
-4. Lista Circular Simple: Para referencia y bitácora de acciones que realiza el usuario al momento de loguearse al sistema
-
-El codigo esta Separado de la siguiente manera  
-- __/avlusuarios.js__ Aqui se encuentra todo lo relacionado al arbol avl de usuarios, donde se van almacenando, y se recorre para ingresar al login de los mismos usuarios.
-- __/arboln.js__ Aqui se encuentra todas las funciones relacionadas con el arbol n-ario, para la creación de carpetas.
-- __/dashboardadmin.html__ Aqui está el código HTML para la pagina o interfaz del administrador.
-- __/listacircular.js__  Aqui esta el codigo y las funciones relacionadas con la bitácora de acciones de los usuarios.
-- __/login.html__ Aqui está el código HTML para la pagina o interfaz para que los usuarios puedan loguearse.
-- __/matrizdispersa.js__ Aqui esta el codigo relacionado con las funciones de la matriz dispersa para cargar archivos y otorgar permisos.
-- __/userpage.html__ Aqui esta el codigo HTML para la interfaz de los usuarios, después de loguearse.
-
------
-
-**Metodos más importantes**
+![image](https://user-images.githubusercontent.com/98117383/236694026-4e2578fd-b220-433e-85d9-f751f82e8c85.png)
 
 
 
+2. Ingresar "Admin" y "Admin" en usuario y contraseña para poder ingresar al dashboard del administrador
+
+![image](https://user-images.githubusercontent.com/98117383/236694062-7e91eae1-612f-418b-b570-e45a96b9243f.png)
+
+3. DASHBOARD ADMINISTRADOR:
+
+![image](https://user-images.githubusercontent.com/98117383/236694083-543aed1b-533e-4a06-b494-6c210000e1dd.png)
+
+1. Cargar Alumnos de AVL: Se carga desde local storage el arbol avl a la tabla hash de usuarios+
+2. Mostrar Tabla Hash: Se carga los usuarios de tabla hash y se visualiza en html los usuarios.
+3. Mostrar Bloques: Muestra los bloques, en su reporte se podrá avanzar y regresar entre bloques para visualizarlos.
+4. Grafica Bloques: Grafica de bloques con graphviz
+
+4. INTERFAZ PARA USUARIOS:
+
+![image](https://user-images.githubusercontent.com/98117383/236694212-3ceb0a31-832d-4789-bd6a-9e688ac120ef.png)
+
+Ya cargados los usuarios al sistema, se puede ingresar con el carnet y su respectiva contraseña en el login.
+ Y luego visualizar los botones:
+ 
+ 1. Carpeta en Grafos: Se ingresa el carnet para verificar que el usuario tenga carpetas creadas y se muestra una grafica de grafo.
+ 2. Mensajes: se accede al sistema de mensajes.
+
+
+5. INTERFAZ MENSAJES:
+
+
+![image](https://user-images.githubusercontent.com/98117383/236694284-8b14caf6-dc1c-4ac5-8426-2ef8cff98b72.png)
+
+Se podrá acceder a la interfaz, donde se podrán enviar mensajes a otros usuarios. AL igual que visualizar conversaciones con otros usuarios del sistema registrados.
