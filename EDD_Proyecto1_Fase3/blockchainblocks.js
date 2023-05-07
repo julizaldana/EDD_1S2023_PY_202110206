@@ -99,7 +99,8 @@ class Bloque{
             })
         }
     }
-  
+
+
     
 }
 
@@ -133,15 +134,12 @@ function enviarMensaje(){
 
 
 //ESTA FUNCION GUARDA EN LOCAL STORAGE LO QUE SE TIENE EL BLOQUE
-async function guardarenLocal(){
-    await bloque.saveToLocalStorage('myBloque')
-}
-
+//ESTA FUNCION ACTUALIZA EL LOCAL STORAGE Y CONVIERTE LOS BLOQUES EN UN ARRAY, PARA LUEGO PODER REVESITARLOS DE MEJOR MANERA
 const bloque2 = new Bloque()
 
-//ESTA FUNCION ACTUALIZA EL LOCAL STORAGE Y CONVIERTE LOS BLOQUES EN UN ARRAY, PARA LUEGO PODER REVESITARLOS DE MEJOR MANERA
-async function guardarenLocal2(){
-    await bloque2.loadFromLocalStorage('myBloque')
+async function guardarenLocal(){
+    await bloque.saveToLocalStorage('bloques')
+    await bloque2.loadFromLocalStorage('bloques')
     console.log(bloque2.toArray())
 }
 
@@ -150,7 +148,7 @@ async function guardarenLocal2(){
 /** REPORTES */
 
 const btnReporte = document.getElementById("reporte")
-btnReporte.addEventListener("click", reporte)
+btnReporte.addEventListener("click", cargarDataTextArea)
 
 //PARA MOSTRAR BLOQUES BLOCKCHAIN
 function reporte(){
@@ -167,6 +165,33 @@ function reporte(){
         mostrar_Mensaje_descriptado()
     }
 }
+
+
+
+
+//CARGAR INFORMACION DE BLOQUES
+async function cargarDataTextArea() {
+    var bloques = localStorage.getItem('bloques');
+    const data = JSON.parse(bloques)
+    console.log(data)
+
+        for (let i = 0; i < data.length; i++) {
+            const obj = data[i];
+            if (obj) { 
+                let cadena = "Index: " + obj.index;
+                cadena += "\nTimeStamp: " + obj.timestamp;
+                cadena += "\nEmisor: " + obj.transmitter;
+                cadena += "\nReceptor: " + obj.receiver;
+                cadena += "\nMensaje: " + obj.message;
+                cadena += "\nPreviousHash: " + obj.previoushash;
+                cadena += "\nHash: " + obj.hash;
+                document.getElementById("reporte-bloques").value = cadena; //TEXT AREA PARA ENVIAR INFORMACION DE BLOCKCHAIN   
+                console.log(obj.index + " " + obj.timestamp + " " + obj.transmitter + " " + obj.receiver + " " + obj.message  + "" + obj.previousHash + "" + obj.hash)            
+            } 
+        }
+}
+
+
 
 const btnReporte1 = document.getElementById("siguiente-bloque")
 btnReporte1.addEventListener("click", reporte_siguente)
@@ -219,7 +244,6 @@ async function mostrar_Mensaje_descriptado(){
 
 
 
-
 /**
  * Una funcion que lea todo los bloques y simplemente muestre el mensaje
  * al usuario final
@@ -229,26 +253,6 @@ async function mostrar_Mensaje_descriptado(){
  * 201700918
  * 
  */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -70,9 +70,9 @@
     <div class="input-group mb-3">
         <button class="btn btn-outline-success" type="button" onclick="cargarAVLtoHash()">Cargar Alumnos de AVL</button>
         <button class="btn btn-outline-success" type="button" onclick="motrarTablaHash()">Mostrar Tabla Hash</button>
-        <button class="btn btn-outline-success" type="button" onclick="loginHashV2()">Manejo de Archivos</button>
-        <button class="btn btn-outline-secondary" type="button" id="button-addon1" onclick="busqueda()">Buscar Carnet</button>
-        <input type="text" id="valor" class="form-control" placeholder="Ej. 201700918" aria-label="Example text with button addon" aria-describedby="button-addon1">
+        <button class="btn btn-outline-success" type="button" onclick="">Manejo de Archivos</button>
+        <button class="btn btn-outline-success" type="button" onclick="mostarBloqueInicial()">Mostrar Bloques</button>
+        <button class="btn btn-outline-success" type="button" onclick="grafica_de_bloques()">Grafica Bloques</button>
     </div>
     <div>
         <div style="width: 22rem;">
@@ -80,16 +80,111 @@
             <input type="file" class="form-control bg-success text-white" id="input" autocompleted="">
         </div>
     </div>
-    <div class="images">
-        <img id="imageavl" class="center">
-        <div>
-          <img id="imagetable" class="center">
-          <br>
-        </div>
+    <div class="mb-3">
+        <span class="input-group-text">Reporte Bloques</span>
+        <textarea  readonly="readonly" rows="8" type="text" class="form-control" id="reporte-bloques"></textarea>
+    </div>
+    <div class="mb-3">
+        <button class="btn btn-outline-success" type="button" onclick="bloqueAnterior()">Bloque Anterior</button>
+        <button class="btn btn-outline-success" type="button" onclick="bloqueSiguiente()">Bloque Siguiente</button> 
     </div>
 </div>
+<div class="images">
+    <img id="imagebloques" class="center">
+</div>
 
-<script src="tablahash.js">
+<script>
+
+
+let indiceBloqueActual = 0; // Se utiliza una variable global para poder mantener el bloque actual como indice
+
+
+
+function actualizarInfoTextArea(index) {
+  var bloques = localStorage.getItem('bloques');
+  const data = JSON.parse(bloques)
+
+  const obj = data[index];
+  if (obj) { 
+    let cadena = "Index: " + obj.index;
+    cadena += "\nTimeStamp: " + obj.timestamp;
+    cadena += "\nEmisor: " + obj.transmitter;
+    cadena += "\nReceptor: " + obj.receiver;
+    cadena += "\nMensaje: " + obj.message;
+    cadena += "\nPreviousHash: " + obj.previoushash;
+    cadena += "\nHash: " + obj.hash;
+
+    document.getElementById("reporte-bloques").value = cadena;
+  } 
+}
+
+function mostarBloqueInicial() {
+  var bloques = localStorage.getItem('bloques');
+  const data = JSON.parse(bloques)
+
+  const obj = data[indiceBloqueActual];
+  if (obj) { 
+    let cadena = "Index: " + obj.index;
+    cadena += "\nTimeStamp: " + obj.timestamp;
+    cadena += "\nEmisor: " + obj.transmitter;
+    cadena += "\nReceptor: " + obj.receiver;
+    cadena += "\nMensaje: " + obj.message;
+    cadena += "\nPreviousHash: " + obj.previoushash;
+    cadena += "\nHash: " + obj.hash;
+
+    document.getElementById("reporte-bloques").value = cadena; 
+  }
+}
+
+
+function bloqueSiguiente() {
+  indiceBloqueActual++;
+  actualizarInfoTextArea(indiceBloqueActual);
+}
+
+function bloqueAnterior() {
+  indiceBloqueActual--;
+  actualizarInfoTextArea(indiceBloqueActual);
+}
+
+
+
+
+ function graficaBloques() {
+    var bloques = localStorage.getItem('bloques');
+    const data = JSON.parse(bloques)
+
+        var cadena = "";
+        for (var i = 0; i < data.length; i++) { 
+            const obj = data[i];
+            if (obj) { 
+                console.log(obj.timestamp + obj.transmitter + obj.receiver + obj.message)
+                cadena = cadena + "nodo" + i + "[width=1.4 label=\"" +  "TimeStamp:  " + obj.timestamp + "\\n" + " Emisor: " + obj.transmitter + "\\n"  + " Receptor: " + obj.receiver + "\\n"  + "PreviousHash: " + obj.previoushash + "\"];\n"
+            }      
+        }
+        for (var i = 0; i < data.length-1; i++) {
+            cadena = cadena + "nodo" + i + " -> nodo" + (i+1) + ";\n"
+        } 
+        return cadena;
+ }
+
+
+ function grafica_de_bloques(){
+    console.log("Grafica Bloques")
+    let url = 'https://quickchart.io/graphviz?graph=';
+    let body = "digraph {\n" +  "rankdir=LR; \n" + "node[shape = record]; \n" 
+    body = body + graficaBloques()
+    body = body +  "}\n"
+    console.log(body)
+    $("#imagebloques").attr("src", url + body);
+}
+
+
+
+
 </script>
+
+<script src="tablahash.js"></script>
+<script src="./blockchainblocks.js"></script>
 </body>
 </html>
