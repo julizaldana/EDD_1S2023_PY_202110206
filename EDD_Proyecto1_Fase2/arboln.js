@@ -402,7 +402,38 @@ class ArbolNArio{
         }
   
     }
-    
+ 
+//Para poder insertar arbolnario a un grafo.
+    grafos(){                      //posicion actual    //posicion de los primeros hijos
+        this.retornarSiguientes(this.raiz.valor,this.raiz.primero)
+    }
+
+    retornarSiguientes(padre,raiz){
+        let hijos = ''
+        let carp_padre = padre
+        let aux = raiz
+        while(aux){
+            hijos += aux.valor + ','
+            aux = aux.siguiente
+        }
+        hijos = hijos.substr(0, hijos.length - 1);
+        if(hijos !== ''){ //Guardar las que tengan carpetas.
+            console.log("Padre: " + padre + "Hijos: " + hijos)
+            grafo.insertarValores(padre,hijos)
+        }
+        aux = raiz
+        while(aux){
+            carp_padre = padre + aux.valor + "/"
+            carp_padre = carp_padre.substr(0,carp_padre.length - 1);
+            this.retornarSiguientes(carp_padre , aux.primero)
+            aux = aux.siguiente
+        }
+    }
+
+
+
+
+
 }
 
 
@@ -435,9 +466,13 @@ function refrescarArbolN(){
     document.getElementById("carpeta").value = "";
 }
 
+//function mostraCarpetas(){
+   // let ruta = document.getElementById("ruta").value
+   // arbolnario.mostrarCarpetasActuales(ruta)
+//}
+
 function mostraCarpetas(){
-    let ruta = document.getElementById("ruta").value
-    arbolnario.mostrarCarpetasActuales(ruta)
+    arbolnario.grafos()
 }
 
 function guardar(){
@@ -456,6 +491,10 @@ function deleteFolder(){
     arbolnario.eliminarCarpeta(carpeta)
     console.log(arbolnario)
 }
+
+
+
+
 
 
 

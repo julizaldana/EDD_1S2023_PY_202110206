@@ -16,7 +16,7 @@ class TablaHash{
         this.utilizacion = 0
     }
 
-    insertar(carnet, usuario, password, arbolnario = {}){
+    insertar(carnet, usuario, password, arbolnario){
         let indice = this.calculoIndice(carnet)
         const nuevoNodo = new nodoHash(carnet, usuario, password, arbolnario)
         if(indice < this.capacidad){
@@ -74,7 +74,7 @@ class TablaHash{
         const auxiliar_tabla = this.tabla
         this.tabla = new Array(this.capacidad)
         auxiliar_tabla.forEach((alumno) => {
-            this.insertar(alumno.carnet, alumno.usuario, alumno.password)
+            this.insertar(alumno.carnet, alumno.usuario, alumno.password, alumno.arbolnario)
         })
     }
 
@@ -353,6 +353,17 @@ async function verificarLoginHash() {
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
 //FUNCION PARA CARGAR DE AVL A TABLA HASH CON RECORRIDO INORDEN.
 async function avltoHashtable(nodo) {
     if (nodo != null) {
@@ -369,7 +380,7 @@ async function avltoHashtable(nodo) {
 }
 
 async function AVLinfotoHASH(nodo){
-    tablaHash.insertar(nodo.valor, nodo.nombre, await tablaHash.sha256(nodo.password), JSON.stringify(nodo.arbolnario));
+    tablaHash.insertar(nodo.valor, nodo.nombre, await tablaHash.sha256(nodo.password), nodo.arbolnario);
 }
 
 function cargarAVLtoHash(){
