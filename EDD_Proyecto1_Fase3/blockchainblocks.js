@@ -1,3 +1,45 @@
+// FUNCIONES DE ENCRIPTACIÓN
+const clave = 'clave-secreta'
+const buffer = new ArrayBuffer(16)
+const view = new Uint8Array(buffer)
+for(let i = 0; i < clave.length; i++){
+    view[i] = clave.charCodeAt(i)
+}
+
+const iv = crypto.getRandomValues(new Uint8Array(16))
+const algoritmo = {name: 'AES-GCM', iv: iv}
+
+async function encriptacion(mensaje){
+    const enconder = new TextEncoder()
+    const data = enconder.encode(mensaje)
+
+    const claveCrypto = await crypto.subtle.importKey('raw', view, 'AES-GCM', true, ['encrypt'])
+
+    const mensajeCifrado = await crypto.subtle.encrypt(algoritmo, claveCrypto, data)
+
+    const cifradoBase64 = btoa(String.fromCharCode.apply(null, new Uint8Array(mensajeCifrado)))
+    
+    return cifradoBase64;
+}
+
+async function desencriptacion(mensaje){
+    const mensajeCifrado = new Uint8Array(atob(mensaje).split('').map(char => char.charCodeAt(0)))
+    try {
+      const claveCrypto = await crypto.subtle.importKey('raw', view, 'AES-GCM', true, ['decrypt'])
+      const mensajeDescifrado = await crypto.subtle.decrypt(algoritmo, claveCrypto, mensajeCifrado)
+      const decoder = new TextDecoder()
+      const mensajeOriginal = decoder.decode(mensajeDescifrado)
+      return mensajeOriginal
+    } catch (error) {
+      console.error(error)
+      return 'Error al desencriptar el mensaje'
+    }
+  }
+  
+  
+
+
+
 //CLASE CON FUNCIONES PARA BLOQUES/BLOCKCHAIN
 // SE UTILIZA UNA LISTA DOBLEMENTE ENLAZADA.
 class nodoBloque{
@@ -123,14 +165,99 @@ function fechaActual(){//librería date()
 const btnEnviar = document.getElementById("enviar")
 btnEnviar.addEventListener("click", enviarMensaje)
 
-function enviarMensaje(){
-    let emisor_mensaje =  document.getElementById("emisor").value
-    let receptor_mensaje = document.getElementById("receptor").value
-    let mensaje_final = document.getElementById("mensaje").value //MENSAJE EN UN TEXT AREA
-    bloque.insertarBloque(fechaActual(),emisor_mensaje,receptor_mensaje,mensaje_final)
-    console.log(bloque);
-    console.log("Mensaje Enviado");
+//FUNCION PARA ENVIAR MENSAJE Y VERIFICAR QUE SI EXISTAN EN EL SISTEMA/ LUEGO SE ENVÍA
+function enviarMensaje() {
+    let emisor_mensaje = document.getElementById("emisor").value;
+    let receptor_mensaje = document.getElementById("receptor").value;
+    let mensaje_final = document.getElementById("mensaje").value; //MENSAJE EN UN TEXT AREA
+  
+    var hashtabla = localStorage.getItem("tablahashusers");
+    const data = JSON.parse(hashtabla);
+    console.log(hashtabla);
+  
+    let emisorExists = false; //Se utilizan variables booleanas para verificar que si existe, y luego hacer un break a los ciclos de busqueda en la tabla hash del local storage.
+    let receptorExists = false;
+  
+    for (let i = 0; i < data.length; i++) {
+      const obj = data[i];
+      if (obj) {
+        try {
+          if (obj.carnet == emisor_mensaje) {
+            alert(
+              "Tu usuario " + " " + obj.usuario + " " + " está listo para mandar el mensaje!"
+            );
+            emisorExists = true;
+          }
+  
+          if (obj.carnet == receptor_mensaje) {
+            alert(
+              "El usuario " + " " + obj.usuario + " " + " ha sido encontrado, se enviará el mensaje!"
+            );
+            receptorExists = true;
+          }
+  
+          if (emisorExists && receptorExists) {
+            console.log("Ambos usuarios existen en la tabla hash.");
+            bloque.insertarBloque(fechaActual(), emisor_mensaje, receptor_mensaje, mensaje_final);
+            console.log(bloque);
+            console.log("Mensaje Enviado");
+            break;
+          }
+        } catch (err) {
+          alert("Hubo un error al verificar los usuarios");
+        }
+      }
+    }
+  
+    if (!emisorExists) {
+      alert("El usuario emisor no existe en el sistema");
+    }
+  
+    if (!receptorExists) {
+      alert("El usuario receptor no existe en el sistema");
+    }
 }
+  
+
+
+
+function verificarCarnetEnviados(){
+    var emiter = document.getElementById("emisore").value;
+    var recibe = document.getElementById("receptore").value;
+
+    var blocks = localStorage.getItem('bloques');
+    const data = JSON.parse(blocks)
+    console.log(blocks)
+
+        for (let i = 0; i < data.length; i++) {
+            const obj = data[i];
+            if (obj) { 
+                if (obj.transmitter == emiter && obj.receiver == recibe) {
+                    alert("Se muestran mensajes enviados al usuario" + obj.receiver )
+                } 
+            } 
+        } 
+}
+
+function verificarCarnetRecibidos(){
+    var emisor = document.getElementById("emisorr").value;
+    var receptor = document.getElementById("receptorr").value;
+
+    var blocks = localStorage.getItem('bloques');
+    const data = JSON.parse(blocks)
+    console.log(blocks)
+
+        for (let i = 0; i < data.length; i++) {
+            const obj = data[i];
+            if (obj) { 
+                if (obj.transmitter == emisor && obj.receiver == receptor) {
+                    alert("Se muestran mensajes enviados al usuario" + obj.receiver )
+                } 
+            } 
+        } 
+}
+
+
 
 
 //ESTA FUNCION GUARDA EN LOCAL STORAGE LO QUE SE TIENE EL BLOQUE
@@ -234,14 +361,89 @@ async function mostrar_Mensaje_descriptado(){
      * mostrar mensaje
      * bloque_actual = abloque_actual.siguiente
      */
-    let cadena =  await desencriptacion(bloque_actual.valor['message'])
-    document.getElementById("reporte-mensajes").value = cadena //TEXT AREA - MENSAJES DESENCRIPTADOS
+    var blocks = localStorage.getItem('bloques');
+    const data = JSON.parse(blocks)
+    for (let i = 0; i < data.length; i++) {
+        const obj = data[i];
+        if (obj) {  
+            let cadena =  await desencriptacion(obj.message)
+            document.getElementById("reporte-mensajes").value = cadena
+        }
+
+    }
 }
 
 
 
 
 
+
+
+//FUNCION PARA MOSTRAR MENSAJES CON HTML LEYENDO LOS BLOQUES QUE SE GUARDAN EN LOCAL STORAGE
+async function mostrarMensajes() {
+    var emiter = document.getElementById("emisore").value;
+    var recibe = document.getElementById("receptore").value;
+
+    var blocks = localStorage.getItem('bloques');
+    const data = JSON.parse(blocks)
+    console.log(blocks)
+
+    var container = document.createElement('div');
+    container.classList.add('container');
+
+    for (let i = 0; i < data.length; i++) {
+        const obj = data[i];
+        if (obj) { 
+            if (obj.transmitter == emiter && obj.receiver == recibe) {
+                var messageElem = document.createElement('div');
+                messageElem.classList.add('message-orange');
+
+                var messageContentElem = document.createElement('p');
+                messageContentElem.classList.add('message-content');
+                messageContentElem.innerText = obj.message;
+                messageElem.appendChild(messageContentElem);
+
+                var messageTimestampElem = document.createElement('div');
+                messageTimestampElem.classList.add('message-timestamp-right');
+                messageTimestampElem.innerText = obj.timestamp;
+                messageElem.appendChild(messageTimestampElem);
+
+                container.appendChild(messageElem);
+            } else if (obj.transmitter == recibe && obj.receiver == emiter) {
+                var messageElem = document.createElement('div');
+                messageElem.classList.add('message-blue');
+
+                var messageContentElem = document.createElement('p');
+                messageContentElem.classList.add('message-content');
+                messageContentElem.innerText = obj.message;
+                messageElem.appendChild(messageContentElem);
+
+                var messageTimestampElem = document.createElement('div');
+                messageTimestampElem.classList.add('message-timestamp-left');
+                messageTimestampElem.innerText = obj.timestamp;
+                messageElem.appendChild(messageTimestampElem);
+
+                container.appendChild(messageElem);
+            }
+        } 
+    } 
+
+    document.body.appendChild(container);
+}
+
+
+
+//RESETEA LOS MENSAJES
+function resetMensajes() {
+    var container = document.querySelector('.container');
+    container.innerHTML = '';
+}
+
+
+
+async function bloquesDesencriptados() {
+    mostrar_Mensaje_descriptado()   
+}
 
 
 /**
@@ -260,41 +462,6 @@ async function mostrar_Mensaje_descriptado(){
 
 
 
-// FUNCIONES DE ENCRIPTACIÓN
-const clave = 'clave-secreta'
-const buffer = new ArrayBuffer(16)
-const view = new Uint8Array(buffer)
-for(let i = 0; i < clave.length; i++){
-    view[i] = clave.charCodeAt(i)
-}
 
-const iv = crypto.getRandomValues(new Uint8Array(16))
-const algoritmo = {name: 'AES-GCM', iv: iv}
-
-async function encriptacion(mensaje){
-    const enconder = new TextEncoder()
-    const data = enconder.encode(mensaje)
-
-    const claveCrypto = await crypto.subtle.importKey('raw', view, 'AES-GCM', true, ['encrypt'])
-
-    const mensajeCifrado = await crypto.subtle.encrypt(algoritmo, claveCrypto, data)
-
-    const cifradoBase64 = btoa(String.fromCharCode.apply(null, new Uint8Array(mensajeCifrado)))
-    
-    return cifradoBase64;
-}
-
-async function desencriptacion(mensaje){
-    const mensajeCifrado = new Uint8Array(atob(mensaje).split('').map(char => char.charCodeAt(0)))
-
-    const claveCrypto = await crypto.subtle.importKey('raw', view, 'AES-GCM', true, ['decrypt'])
-
-    const mensajeDescifrado = await crypto.subtle.decrypt(algoritmo, claveCrypto, mensajeCifrado)
-
-    const decoder = new TextDecoder()
-    const mensajeOriginal = decoder.decode(mensajeDescifrado)
-
-    return mensajeOriginal
-}
 
 

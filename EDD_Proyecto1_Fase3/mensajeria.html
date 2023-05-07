@@ -7,6 +7,112 @@
     <title>Mensajes | EDD GoDrive | Fase 3</title>
 <style>
 
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:300,400);
+
+
+        .container {
+        width: 400px;
+        padding: 10px;
+    }
+
+    .message-blue {
+        position: relative;
+        margin-left: 20px;
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #A8DDFD;
+        width: 200px;
+        height: 50px;
+        text-align: left;
+        font: 400 .9em 'Open Sans', sans-serif;
+        border: 1px solid #97C6E3;
+        border-radius: 10px;
+    }
+
+    .message-orange {
+        position: relative;
+        margin-bottom: 10px;
+        margin-left: calc(100% - 240px);
+        padding: 10px;
+        background-color: #f8e896;
+        width: 200px;
+        height: 50px;
+        text-align: left;
+        font: 400 .9em 'Open Sans', sans-serif;
+        border: 1px solid #dfd087;
+        border-radius: 10px;
+    }
+
+    .message-content {
+        padding: 0;
+        margin: 0;
+    }
+
+    .message-timestamp-right {
+        position: absolute;
+        font-size: .85em;
+        font-weight: 300;
+        bottom: 5px;
+        right: 5px;
+    }
+
+    .message-timestamp-left {
+        position: absolute;
+        font-size: .85em;
+        font-weight: 300;
+        bottom: 5px;
+        left: 5px;
+    }
+
+    .message-blue:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 15px solid #A8DDFD;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        top: 0;
+        left: -15px;
+    }
+
+    .message-blue:before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-top: 17px solid #97C6E3;
+        border-left: 16px solid transparent;
+        border-right: 16px solid transparent;
+        top: -1px;
+        left: -17px;
+    }
+
+    .message-orange:after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-bottom: 15px solid #f8e896;
+        border-left: 15px solid transparent;
+        border-right: 15px solid transparent;
+        bottom: 0;
+        right: -15px;
+    }
+
+    .message-orange:before {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-bottom: 17px solid #dfd087;
+        border-left: 16px solid transparent;
+        border-right: 16px solid transparent;
+        bottom: -1px;
+        right: -17px;
+    }
+
+
     .body{
         display: flex;
         flex-direction: column;
@@ -67,7 +173,7 @@
     </h1>
 </header>
 <br>
-<div class="container">
+<div class="container1">
     <div class="mb-3">
         <div class="input-group mb-3">
             <span class="input-group-text">Emisor</span>
@@ -87,19 +193,49 @@
         <span class="input-group-text">Mensaje Desencriptado</span>
         <textarea  readonly="readonly" rows="8" type="text" class="form-control" id="reporte-mensajes"></textarea>
     </div>
+    <hr>
+    <div class="input-group mb-3">
+        <label class="form-label">Observa tus mensajes enviados y recibidos, verificando aquí ->   </label>
+        <span class="input-group-text">Emisor</span>
+        <input type="text" class="form-control" placeholder="201700000" id="emisore">
+        <span class="input-group-text">Receptor</span>
+        <input type="text" class="form-control" placeholder="201700001" id="receptore">
+        <!-- MENSAJES -->
+        <button class="btn btn-outline-success" type="button" onclick="mostrarMensajes()">Mostrar Mensajes</button>
+        <button class="btn btn-outline-success" type="button" onclick="resetMensajes()">Reset Mensajes</button>
+        <button class="btn btn-outline-success" type="button" onclick="bloquesDesencriptados()">Bloques desencriptados</button>  
+
+    </div>
 </div>
 
 
-
-
-
 <script>
-    function mensajeria() {
-        window.location = "mensajeria.html"
-    }
+
+
+async function bloquesDesencriptados() {
+        var bloques = localStorage.getItem('bloques');
+        const data = JSON.parse(bloques)
+    
+            var cadena = "";
+            for (var i = 0; i < data.length; i++) { 
+                const obj = data[i];
+                if (obj) { 
+                    console.log(obj.timestamp + obj.transmitter + obj.receiver + await desencriptacion(obj.message))
+                    cadena = cadena + "nodo" + i + "[width=1.4 label=\"" +  "TimeStamp:  " + obj.timestamp + "\\n" + " Emisor: " + obj.transmitter + "\\n"  + " Receptor: " + obj.receiver + "\\n"  + "PreviousHash: " + obj.previoushash + "\"];\n"
+                }      
+            }
+            for (var i = 0; i < data.length-1; i++) {
+                cadena = cadena + "nodo" + i + " -> nodo" + (i+1) + ";\n"
+            } 
+            return cadena;
+     
+}
+
 </script>
 
+
 <script src="blockchainblocks.js"></script>
-<script src="grafo.js"></script>
+
+
 </body>
 </html>
